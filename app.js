@@ -1,0 +1,179 @@
+import {WorkshopAtmosphere} from './atmosphere.js?v=stanza-handoff-1';
+import {NarratedPrologue} from './prologue.js';
+import {config} from './config.js?v=stanza-handoff-1';
+import {readProgress} from './logic.js';
+import {FinalChallenge} from './challenge.js?v=stanza-handoff-1';
+const $=id=>document.getElementById(id);
+let storage;try{storage=window.localStorage;}catch{}
+if (new URLSearchParams(location.search).get('reset') === '1') {
+  storage?.removeItem(config.storageKey);
+  storage?.removeItem(config.challenge.storageKey);
+  const cleanUrl = new URL(location.href);
+  cleanUrl.searchParams.delete('reset');
+  history.replaceState(null, '', cleanUrl);
+}
+const state={...readProgress(storage,config.storageKey),busy:false};
+try{state.completionId=JSON.parse(storage.getItem(config.storageKey))?.completionId;}catch{}
+state.completionId ||= crypto.randomUUID?.() || `finale-${Date.now()}-${Math.random()}`;
+const challenge = new FinalChallenge({audio: $('prologue-audio'), settings: config.challenge, storage});
+challenge.prepare();
+let puzzleOpen=false;
+try{state.introSeen=!!JSON.parse(storage.getItem(config.storageKey))?.introSeen;}catch{}
+const visual = config.visuals;
+const scene = $('scene');
+const stage = $('scene-stage');
+const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
+$('workshop-image').src = visual.image;
+const atmosphere = new WorkshopAtmosphere(scene, visual);
+const prologueScenes = [
+  {element: scene, effects: atmosphere},
+  {element: $('workbench-scene'), effects: new WorkshopAtmosphere($('workbench-scene'), config.workbenchVisuals)},
+  {element: $('writing-scene'), effects: new WorkshopAtmosphere($('writing-scene'), config.writingVisuals)},
+];
+let sceneIndex = 0;
+let cancelFade;
+
+function resetPrologue() {
+  cancelFade?.();
+  sceneIndex = 0;
+  for (const [index, {element, effects}] of prologueScenes.entries()) {
+    effects.stop();
+    element.classList.remove('is-visible', 'is-still');
+    element.hidden = index !== 0;
+  }
+}
+
+function openPuzzle() {
+  const cinematic = document.body.classList.contains('prologue-playing');
+  prologue.stop();
+  challenge.stop();
+  cancelFade?.();
+  puzzleOpen = true;
+  state.introSeen = true;
+  save();
+  for (const {element, effects} of prologueScenes) {
+    effects.stop();
+    element.classList.add('is-still');
+  }
+  // Stage the listening layout before the first visible challenge frame.
+  challenge.prepareEntry({playSequence: cinematic});
+  $('puzzle').hidden = false;
+  document.body.classList.add('challenge-open');
+  $('layout').classList.add('puzzle-open');
+  $('enter-workshop').hidden = true;
+  $('resume-workshop').hidden = true;
+  $('replay-intro').hidden = false;
+  $('intro-status').textContent = 'The workshop is yours. The keys await.';
+
+  const reveal = () => {
+    document.body.classList.remove('prologue-playing', 'prologue-ending');
+    document.body.classList.add('challenge-open');
+    $('puzzle').focus({preventScroll: true});
+    challenge.enter({playSequence: cinematic});
+  };
+  if (!cinematic || motionPreference.matches) {
+    reveal();
+    return;
+  }
+  document.body.classList.add('prologue-ending');
+  waitForFade(stage, 850).then(reveal);
+}
+
+function waitForFade(element, timeout) {
+  if (motionPreference.matches) return Promise.resolve();
+  return new Promise(resolve => {
+    const finish = () => {
+      clearTimeout(timer);
+      element.removeEventListener('transitionend', ended);
+      motionPreference.removeEventListener('change', changed);
+      cancelFade = null;
+      resolve();
+    };
+    const ended = event => {
+      if (event.target === element && event.propertyName === 'opacity') finish();
+    };
+    const changed = () => { if (motionPreference.matches) finish(); };
+    const timer = setTimeout(finish, timeout);
+    cancelFade = finish;
+    element.addEventListener('transitionend', ended);
+    motionPreference.addEventListener('change', changed);
+  });
+}
+
+async function advanceScene(index) {
+  const next = prologueScenes[index];
+  if (!next) {
+    openPuzzle();
+    return;
+  }
+  const outgoing = prologueScenes[sceneIndex];
+  next.element.hidden = false;
+  next.effects.start('intro');
+  void next.element.offsetWidth;
+  next.element.classList.add('is-visible');
+  await waitForFade(next.element, 2100);
+  if (!prologue.active) return;
+  outgoing.effects.stop();
+  outgoing.element.hidden = true;
+  sceneIndex = index;
+}
+
+const prologue = new NarratedPrologue({
+  audio: $('prologue-audio'),
+  clips: config.prologueClips,
+  images: prologueScenes.map(({element}) => element.querySelector('img')),
+  onScene() {
+    resetPrologue();
+    challenge.stop();
+    puzzleOpen = false;
+    $('puzzle').hidden = true;
+    $('layout').classList.remove('puzzle-open');
+    document.body.classList.remove('challenge-open');
+    document.body.classList.add('prologue-playing');
+    scene.classList.add('introduced', 'ambient');
+    atmosphere.start('intro');
+    void stage.offsetWidth;
+  },
+  onAdvance: advanceScene,
+  onRetry(show) {
+    $('prologue-recovery').hidden = !show;
+    if (show) $('retry-prologue').focus({preventScroll: true});
+  },
+  onReady(ready) {
+    $('enter-workshop').disabled = false;
+    $('replay-intro').disabled = false;
+    $('enter-workshop').textContent = ready ? 'Enter the studio' : 'Retry loading';
+    if (!puzzleOpen) {
+      $('intro-status').textContent = ready ? 'The workshop stands empty.' : 'The prologue could not load. Try again.';
+    }
+  },
+});
+
+function startIntroduction() {
+  if (prologue.urls) prologue.start();
+  else preparePrologue();
+}
+function preparePrologue() {
+  $('enter-workshop').disabled = true;
+  $('replay-intro').disabled = true;
+  $('intro-status').textContent = 'Loading the prologue…';
+  prologue.prepare();
+}
+$('enter-workshop').onclick = startIntroduction;
+$('replay-intro').onclick = startIntroduction;
+$('resume-workshop').onclick = openPuzzle;
+$('retry-prologue').onclick = () => prologue.retry();
+preparePrologue();
+
+for(const [key,value] of Object.entries(visual.doorway))scene.style.setProperty(`--door-${key}`,`${value}%`);
+if(state.introSeen||state.unlocked||state.solved||challenge.listened){
+ $('resume-workshop').hidden=false;$('intro-status').textContent='Your progress is saved. Resume your puzzle, or enter to hear the introduction.';
+}
+
+function save() {
+  try { storage.setItem(config.storageKey, JSON.stringify(state)); } catch {}
+}
+window.addEventListener('pagehide', () => {
+  if (prologue.phase === 'playing' && !prologue.audio.ended) prologue.fail();
+  else if (challenge.player.phase === 'playing' && !challenge.player.audio.ended) challenge.player.fail();
+});

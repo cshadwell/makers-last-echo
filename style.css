@@ -1,0 +1,460 @@
+:root{color-scheme:dark;font-family:Georgia,serif;color:#e8dfc9;background:#101819}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#253d3b 0,transparent 65%)}main{max-width:760px;margin:auto;padding:36px 22px 55px}.eyemark{text-align:center;font-size:48px;color:#c1a46b}.eyebrow{text-align:center;letter-spacing:.24em;font:11px system-ui;color:#d1b67c}h1{text-align:center;font-weight:400;font-size:clamp(30px,6vw,46px);margin:15px 0}.intro{text-align:center;color:#b9c6bb;font-style:italic}h2{font-weight:400;font-size:25px}p{line-height:1.65}section{border-top:1px solid #62756770;margin-top:28px;padding-top:10px}.prototype,.small,footer,details{font:13px/1.6 system-ui;color:#b5c2b8}.prototype{border:1px solid #907744;padding:10px;text-align:center;color:#dfc995}button,input{font:16px system-ui}button{cursor:pointer;background:#263c39;border:1px solid #8b9e86;color:#f3e6ca;padding:11px 14px;border-radius:5px;touch-action:manipulation}button:hover{background:#38544d}button:disabled{opacity:.5;cursor:default}button:focus-visible,input:focus-visible{outline:3px solid #edc46d;outline-offset:3px}.controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}label{display:block;margin:18px 0 8px}input{width:100%;padding:13px;background:#0d1919;border:1px solid #8b9e86;color:#fff;margin-bottom:12px;border-radius:4px}.piano{position:relative;display:flex;height:190px;margin:20px 0}.white{position:relative;flex:1;min-width:0;border:1px solid #696f65;border-radius:0 0 7px 7px;background:linear-gradient(#eee9d9,#fff9e8);color:#202d2a;padding:0;display:flex;align-items:flex-end;justify-content:center;padding-bottom:16px;box-shadow:inset 0 -6px #b3ae9e}.white:hover,.white.sounding{background:#d4c18e}.black{position:absolute;top:0;width:8%;height:61%;background:linear-gradient(90deg,#131719,#323a38,#0a1010);border:1px solid #090f10;border-radius:0 0 4px 4px;pointer-events:auto;z-index:2;box-shadow:0 5px 4px #0008}.white span{visibility:hidden}.piano.labels .white span{visibility:visible}#victory{border:1px solid #b79a61;padding:22px;background:#293b3066;box-shadow:0 0 40px #c9aa5420;animation:arrive 1s ease-out}#victory h2{text-align:center}footer{margin:30px 0}details{padding:15px;border:1px dashed #8a7953}details button{margin:5px}#status{color:#eac88e}[hidden]{display:none!important}@keyframes arrive{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}@media(max-width:420px){main{padding:22px 14px}.piano{height:158px}button{padding:11px}.controls button{flex-grow:1}}@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+/* The supplied artwork is an unfiltered, uncropped image. Only sibling overlays move. */
+body{background:#0d0e0d}.workshop-title{padding:20px 18px 4px}.workshop-title h1{margin:8px 0}.workshop-title .intro{margin:10px 0 20px}.workshop-layout{max-width:1660px;margin:auto;padding:0 22px 30px}.workshop-setting{min-width:0}.scene{position:relative;isolation:isolate;overflow:hidden;background:#15130f;aspect-ratio:1660/948}.scene img{display:block;width:100%;height:100%;object-fit:contain}.arrival{padding:10px 2px 18px}.arrival p{margin:8px 0;color:#c8bba2}.arrival .controls{justify-content:center}.arrival #intro-status{text-align:center}#scene-status{font:13px/1.5 system-ui;text-align:center}.doorway-glow{position:absolute;left:var(--door-left);top:var(--door-top);width:var(--door-width);height:var(--door-height);pointer-events:none;background:radial-gradient(ellipse,rgba(237,136,43,.7),rgba(172,81,15,.22) 48%,transparent 72%);opacity:0}#dust{position:absolute;inset:0;pointer-events:none}#dust i{position:absolute;width:var(--dust-size);height:var(--dust-size);border-radius:50%;background:#dac09b;opacity:0}.scene.introduced{animation:workshop-arrive var(--fade-seconds) ease-out both}.ambient .doorway-glow{animation:doorway-warmth var(--glow-seconds) ease-in-out forwards}.ambient #dust i{opacity:var(--dust-opacity);animation:dust-drift var(--drift-time) ease-in-out infinite alternate}.workshop-layout.puzzle-open{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(330px,1fr);gap:28px;align-items:start}.puzzle-open .workshop-setting{position:sticky;top:20px}#puzzle{width:100%;max-width:760px;padding:0 12px 35px;outline:none}#puzzle section:first-of-type{margin-top:18px}.prototype{margin-top:0;background:#191710}section{border-color:#695d496b}button{background:#302b22;border-color:#9b8660}button:hover{background:#463b29}input{background:#14130f;border-color:#8d7a57}@keyframes workshop-arrive{from{opacity:.15}to{opacity:1}}@keyframes doorway-warmth{0%{opacity:0}72%{opacity:var(--glow-opacity)}100%{opacity:calc(var(--glow-opacity)*.65)}}@keyframes dust-drift{from{transform:translate(0,7px)}to{transform:translate(22px,-38px)}}@media(max-width:900px){.workshop-layout.puzzle-open{display:block}.puzzle-open .workshop-setting{position:static}.workshop-layout{padding:0 12px 25px}#puzzle{margin:auto;padding:0 5px 30px}.workshop-title{padding-top:15px}}@media(prefers-reduced-motion:reduce){.scene.introduced,.ambient .doorway-glow,.ambient #dust i{animation:none!important}.ambient .doorway-glow,#dust{display:none}.scene{opacity:1}}
+/* Strong cinematic preset: independent, feathered lighting layers; no image transforms. */
+.scene.introduced{animation:none}.ambient .doorway-glow,.ambient #dust i{animation:none}
+.doorway-glow{background:radial-gradient(ellipse at 65% 47%,rgba(255,167,63,.86),rgba(225,113,24,.50) 44%,transparent 76%);opacity:var(--light-level,0);filter:blur(8px);z-index:1}
+.floor-spill{position:absolute;left:8%;top:58%;width:48%;height:35%;pointer-events:none;background:radial-gradient(ellipse at 35% 45%,rgba(248,152,55,.58),rgba(211,111,32,.19) 48%,transparent 73%);opacity:var(--light-level,0);filter:blur(7px);z-index:1}
+.light-shaft{position:absolute;left:23%;top:30%;width:57%;height:57%;pointer-events:none;background:conic-gradient(from 100deg at 0% 24%,transparent 0deg,rgba(255,195,105,.12) 7deg,rgba(255,205,131,.82) 21deg,rgba(255,189,94,.24) 35deg,transparent 44deg);mask-image:radial-gradient(ellipse at 5% 35%,#000 0%,#0008 40%,transparent 73%);-webkit-mask-image:radial-gradient(ellipse at 5% 35%,#000 0%,#0008 40%,transparent 73%);filter:blur(6px);opacity:var(--beam-level,0);z-index:2}
+#dust{z-index:3}.ambient #dust i{opacity:0;box-shadow:none;background:#c9b99d;will-change:left,top}
+.scene-dimmer{position:absolute;inset:0;background:#070605;opacity:var(--entrance-dim,.67);pointer-events:none;z-index:4;transition:opacity .35s linear}
+.scene.ambient .scene-dimmer{opacity:var(--entrance-dim,0)}
+@media(max-width:600px){.light-shaft{filter:blur(3px)}.floor-spill,.doorway-glow{filter:blur(4px)}}
+@media(prefers-reduced-motion:reduce){.doorway-glow,.floor-spill,.light-shaft,#dust,.scene-dimmer{display:none!important}}
+/* Dust-laden air: local ribbons, uneven shafts, no opaque veil over the eye. */
+.doorway-glow{background:radial-gradient(ellipse at 67% 48%,rgba(255,169,71,.77),rgba(225,113,24,.30) 37%,transparent 67%)}
+.light-shaft{background:conic-gradient(from 100deg at 0% 24%,transparent 0deg,rgba(255,195,105,.08) 7deg,rgba(255,205,131,.62) 17deg,rgba(255,205,131,.16) var(--band-one,26deg),rgba(255,202,122,.64) var(--band-two,38deg),transparent 46deg)}
+.air-haze{position:absolute;left:12%;top:29%;width:60%;height:59%;overflow:hidden;pointer-events:none;z-index:2;opacity:var(--haze-level,0);mask-image:radial-gradient(ellipse,#000 22%,transparent 72%);-webkit-mask-image:radial-gradient(ellipse,#000 22%,transparent 72%)}
+.air-haze i{position:absolute;left:-10%;top:15%;width:115%;height:48%;border-radius:50%;background:radial-gradient(ellipse,rgba(227,202,159,.7),rgba(206,175,133,.2) 43%,transparent 70%);filter:blur(14px);will-change:transform}
+.air-haze i:nth-child(2){top:38%;left:0%;height:35%}.air-haze i:nth-child(3){top:66%;left:-25%;height:25%;width:110%}
+@media(max-width:600px){.air-haze i{filter:blur(6px)}}
+@media(prefers-reduced-motion:reduce){.air-haze{display:none!important}}
+
+/* Keep both prologue images in one fixed responsive frame. The opaque room
+   stays under the incoming image throughout the crossfade. */
+.scene-stage {
+  position: relative;
+  aspect-ratio: 1660 / 948;
+  overflow: hidden;
+}
+.scene-stage > .scene { position: absolute; inset: 0; aspect-ratio: auto; }
+.scene-workbench {
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+  transform-origin: 52% 43%;
+}
+.scene-workbench img { object-fit: cover; }
+.scene-workbench.is-visible {
+  opacity: 1;
+  animation: workbench-push 25s ease-out forwards;
+}
+@keyframes workbench-push { from { transform: scale(1); } to { transform: scale(1.035); } }
+
+.lantern-glow, .scene-workbench .light-shaft, .scene-dust {
+  position: absolute;
+  pointer-events: none;
+}
+.lantern-glow {
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 22% 6%, #ffbf655e 0%, #ed822925 12%, transparent 24%),
+    radial-gradient(ellipse at 33% 38%, #f6aa4f41 0%, #d98b3a1a 18%, transparent 35%);
+  opacity: var(--light-level, 0);
+}
+.scene-workbench .light-shaft {
+  left: 21%;
+  top: 2%;
+  width: 65%;
+  height: 72%;
+  background: conic-gradient(from 94deg at 0% 0%,
+    transparent 0deg, #ec9f4830 10deg, #ffd49f88 28deg,
+    #e79e5244 46deg, transparent 65deg);
+  -webkit-mask-image: radial-gradient(ellipse at 12% 10%, #000, #0008 43%, transparent 75%);
+  mask-image: radial-gradient(ellipse at 12% 10%, #000, #0008 43%, transparent 75%);
+  filter: blur(8px);
+}
+.scene-dust { inset: 0; z-index: 3; }
+.scene-dust i {
+  position: absolute;
+  border-radius: 50%;
+  background: #ffe1a6;
+  opacity: 0;
+}
+@media (max-width: 600px) { .scene-workbench .light-shaft { filter: blur(4px); } }
+@media (prefers-reduced-motion: reduce) {
+  .scene-workbench, .scene-workbench.is-visible { transition: none; animation: none; transform: none; }
+  .lantern-glow, .scene-workbench .light-shaft, .scene-dust { display: none; }
+}
+
+.scene-writing { transform-origin: 48% 53%; }
+.scene-writing .lantern-glow {
+  background:
+    radial-gradient(ellipse at 11% 12%, #ffc06d66, #e98b362c 13%, transparent 32%),
+    radial-gradient(ellipse at 28% 34%, #ffb65b36, #e6a04b17 21%, transparent 43%);
+}
+.scene-workbench.is-still { animation-play-state: paused; }
+.scene-workbench.is-still .scene-dust,
+.scene-workbench.is-still .lantern-glow,
+.scene-workbench.is-still .light-shaft { opacity: 0; transition: opacity .8s ease-out; }
+
+.prologue-playing { overflow: hidden; overscroll-behavior: none; }
+.prologue-playing:not(.prologue-ending) .workshop-title,
+.prologue-playing:not(.prologue-ending) .arrival,
+.prologue-playing:not(.prologue-ending) #puzzle { visibility: hidden; }
+.prologue-playing .scene-stage {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100dvh;
+  aspect-ratio: auto;
+  z-index: 20;
+  background: #080706;
+}
+.prologue-playing .scene {
+  width: min(100vw, 175.1dvh);
+  height: auto;
+  aspect-ratio: 1660 / 948;
+  inset: 50% auto auto 50%;
+  translate: -50% -50%;
+}
+.prologue-ending .scene-frame { aspect-ratio: 1660 / 948; }
+.prologue-ending .scene-stage { opacity: 0; transition: opacity .8s ease; }
+.prologue-recovery {
+  position: absolute;
+  z-index: 5;
+  inset: auto 0 6%;
+  width: fit-content;
+  max-width: calc(100% - 24px);
+  margin-inline: auto;
+  padding: 12px 20px 18px;
+  background: #18140f;
+  border: 1px solid #9b8660;
+  text-align: center;
+}
+.prologue-recovery p { margin: 0 0 8px; }
+.prologue-playing .scene-workbench.is-visible { animation-fill-mode: forwards; }
+@media (prefers-reduced-motion: reduce) {
+  .prologue-ending .scene-stage { transition: none; }
+}
+
+/* Four recorded stanzas and a keyboard prepared for later interactive regions. */
+.challenge-open { background: repeating-linear-gradient(3deg, #21170f 0px, #281b12 3px, #1b130e 7px, #251a11 11px); }
+.challenge-open .workshop-title, .challenge-open .workshop-setting { display: none; }
+.challenge-open .workshop-layout.puzzle-open { display: block; max-width: 1480px; padding: 26px 30px; }
+#puzzle { max-width: 1480px; }
+.stanza-panels { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(12px, 2vw, 28px); }
+.stanza-card { min-width: 0; display: grid; gap: 16px; }
+.portrait-frame {
+  position: relative;
+  aspect-ratio: 2 / 3;
+  border: 5px ridge #8b6b37;
+  box-shadow: 0 6px 15px #0009, inset 0 0 0 1px #d2b676;
+  background: #140f0b;
+  transition: border-color .7s, box-shadow .7s;
+}
+.portrait-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.portrait-sharp { opacity: 0; transition: opacity .8s ease; }
+.is-sharp .portrait-sharp { opacity: 1; }
+.portrait-frame.is-playing { border-color: #c99a50; box-shadow: 0 0 22px #e6a84d3b, 0 5px 16px #000b; }
+.stanza-card button, .final-line-control button, #line-dialog button {
+  color: #f0dfb5;
+  background: linear-gradient(#483621, #291d13);
+  border: 1px solid #b29255;
+  box-shadow: inset 0 1px #ddc18333, 0 3px 6px #0008;
+  min-height: 46px;
+}
+.final-line-control { display: flex; justify-content: center; margin: 24px 0; }
+.final-line-control button { min-width: min(100%, 330px); padding: 14px 25px; font-family: Georgia, serif; font-size: 20px; }
+.keyboard-art { position: relative; width: 100%; }
+.keyboard-art img { display: block; width: 100%; height: auto; }
+#future-key-regions { position: absolute; inset: 0; pointer-events: none; }
+.stanza-recovery { text-align: center; margin: 18px auto; color: #f0dfb5; }
+#final-victory { text-align: center; font-size: 22px; color: #efd39a; margin: 24px 0; }
+#line-dialog {
+  width: min(500px, calc(100vw - 32px));
+  padding: 28px;
+  border: 3px ridge #a98b50;
+  border-radius: 6px;
+  color: #eddfbe;
+  background: linear-gradient(135deg, #38271a, #1d160f);
+  box-shadow: 0 15px 70px #000c;
+}
+#line-dialog::backdrop { background: #080604cf; }
+#line-dialog label { margin-top: 0; font-size: 23px; }
+#line-feedback { min-height: 1.6em; color: #edc48a; }
+.dialog-actions { display: flex; justify-content: flex-end; gap: 10px; }
+@media (max-width: 680px) {
+  .challenge-open .workshop-layout.puzzle-open { padding: 18px 10px; }
+  .stanza-panels { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 12px; }
+  .stanza-card { gap: 10px; }
+  .stanza-card button { padding: 10px 4px; font-size: 14px; }
+  .portrait-frame { border-width: 3px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .portrait-sharp, .portrait-frame { transition: none; }
+}
+.challenge-open.prologue-playing .workshop-setting { display: block; position: static; height: 0; }
+.challenge-open.prologue-playing .scene-frame { height: 0; aspect-ratio: auto; }
+.challenge-open.prologue-playing .arrival { display: none; }
+
+/* The supplied sheets include a layout mockup. These viewports display only
+   the parchment area while keeping the original image pixels proportional. */
+.initial-listening .stanza-card > button,
+.initial-listening .final-line-control,
+.initial-listening .keyboard-art { display: none; }
+.stanza-readalong {
+  position: relative;
+  width: min(100%, 1000px);
+  aspect-ratio: 1220 / 580;
+  margin: 30px auto 0;
+}
+.stanza-sheet {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity .8s ease;
+}
+.stanza-sheet.is-reading { opacity: 1; }
+.stanza-sheet img {
+  position: absolute;
+  width: 172.13115%;
+  height: 258.62069%;
+  max-width: none;
+  left: -36.06557%;
+  top: -150%;
+}
+#line-dialog {
+  width: min(760px, calc(100vw - 24px));
+  max-height: calc(100dvh - 24px);
+  padding: 12px;
+  border: none;
+  background: #251a13;
+  overflow-y: auto;
+}
+.full-poem-sheet {
+  position: relative;
+  aspect-ratio: 1235 / 1370;
+  overflow: hidden;
+}
+.full-poem-sheet > img {
+  position: absolute;
+  width: 170.04049%;
+  height: 109.48905%;
+  max-width: none;
+  left: -35.22267%;
+  top: -5.47445%;
+}
+.parchment-entry {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: 7.5%;
+  color: #301b10;
+}
+#line-dialog .parchment-entry label {
+  font-size: clamp(12px, 2.1vw, 18px);
+  margin: 0 0 2px;
+  text-align: center;
+}
+#line-dialog .parchment-entry input {
+  font-family: var(--poem-answer-font, 'Snell Roundhand', 'Apple Chancery', cursive);
+  font-size: clamp(18px, 3.2vw, 30px);
+  color: #29180e;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #62452d;
+  border-radius: 0;
+  text-align: center;
+  margin: 0;
+  padding: 3px 0;
+}
+#line-dialog #line-feedback { margin: 8px 12px; }
+#line-dialog .dialog-actions { padding: 0 12px 6px; }
+@media (prefers-reduced-motion: reduce) {
+  .stanza-sheet { transition: none; }
+}
+/* Trim the surrounding mockup at the sheet's ragged silhouette. */
+.full-poem-sheet {
+  clip-path: polygon(5% 4%, 10% 2%, 17% 4%, 23% 3%, 29% 5%, 35% 3%, 42% 4%, 48% 3%, 55% 5%, 62% 4%, 69% 6%, 76% 4%, 83% 3%, 90% 4%, 97% 2%, 97% 12%, 96% 22%, 97% 34%, 96% 45%, 97% 57%, 96% 68%, 97% 80%, 96% 89%, 97% 97%, 89% 97%, 82% 96%, 75% 98%, 68% 96%, 60% 98%, 52% 96%, 44% 98%, 36% 96%, 28% 97%, 21% 96%, 17% 93%, 12% 97%, 6% 97%, 4% 90%, 5% 80%, 4% 70%, 5% 59%, 4% 48%, 5% 37%, 4% 25%, 5% 14%);
+}
+#puzzle:not(.initial-listening) .keyboard-art,
+#puzzle:not(.initial-listening) .final-line-control,
+#puzzle:not(.initial-listening) .stanza-card > button { animation: challenge-controls-in .8s ease both; }
+@keyframes challenge-controls-in { from { opacity: 0; } to { opacity: 1; } }
+.full-poem-sheet { clip-path: url(#poem-page-mask); }
+#line-dialog .parchment-entry label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@font-face {
+  font-family: 'FauxAntique';
+  src: url('assets/FauxAntique.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  size-adjust: 300%;
+}
+:root { --poem-answer-font: 'FauxAntique', cursive; }
+.stanza-readalong { container-type: inline-size; }
+.stanza-sheet { overflow: visible; filter: drop-shadow(0 8px 7px #0007); }
+.stanza-sheet img,
+.full-poem-sheet > img {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+.stanza-handwriting {
+  position: absolute;
+  inset: 15% 8%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2c1a0f;
+  font-family: 'FauxAntique', cursive;
+  font-size: clamp(20px, 5.2cqw, 54px);
+  text-align: center;
+}
+.poem-verse { margin: 0; line-height: 1.5; }
+.poem-verse span { display: block; }
+.full-poem-sheet {
+  clip-path: none;
+  aspect-ratio: 3 / 4;
+  container-type: inline-size;
+  overflow: visible;
+  filter: drop-shadow(0 4px 6px #0006);
+}
+.full-poem-text {
+  position: absolute;
+  inset: 9% 8% 22%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #2c1a0f;
+  font-family: 'FauxAntique', cursive;
+  font-size: clamp(17px, 4.5cqw, 34px);
+  text-align: center;
+}
+.full-poem-text .poem-verse { line-height: 1.35; }
+.parchment-entry { left: 12%; right: 12%; bottom: 10%; }
+#line-dialog .parchment-entry input {
+  font-size: clamp(22px, 5cqw, 38px);
+  color: #2c1a0f;
+}
+#line-dialog { background: #1d150e; }
+
+#line-dialog { width: min(760px, calc(100vw - 24px), calc((100dvh - 150px) * .75)); }
+#line-dialog .parchment-entry input { line-height: 1.35; }
+
+#future-key-regions { pointer-events: auto; }
+.sample-key {
+  position: absolute;
+  min-height: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0 0 6px 6px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.sample-key-white { z-index: 1; }
+.sample-key-black { z-index: 2; }
+.sample-key:hover, .sample-key:active { background: transparent; }
+.sample-key:disabled { opacity: 1; }
+.sample-key:focus-visible { outline: 2px solid #f7d294; outline-offset: -3px; }
+
+/* One continuous walnut instrument body; viewport sizing preserves key geometry. */
+.challenge-open {
+  min-height: 100dvh;
+  background: radial-gradient(ellipse at 50% 35%, #0000 20%, #09040188 100%),
+    url('assets/instrument-walnut.png') center / cover fixed;
+}
+.challenge-open .workshop-layout.puzzle-open {
+  max-width: none;
+  min-height: 100dvh;
+  padding: 18px 24px;
+  box-shadow: inset 0 0 0 5px #1a0b05, inset 0 0 0 7px #9d6f323d, inset 0 0 55px #0009;
+}
+.challenge-open #puzzle {
+  padding: 0;
+  margin: 0 auto;
+  background: none;
+}
+.stanza-panels { gap: clamp(12px, 1.8vw, 24px); }
+.stanza-card { gap: 12px; }
+.portrait-frame {
+  border: 5px ridge #8d6735;
+  box-shadow: 0 1px 0 #daaa643d, 0 0 0 3px #1c0d08, inset 0 8px 15px #000b;
+}
+.stanza-card > button, .final-line-control button {
+  background: linear-gradient(#362219bd, #120b07d9), url('assets/instrument-walnut.png') center / 600px auto;
+  border: 2px ridge #99713c;
+  box-shadow: inset 0 2px 4px #eec38825, inset 0 -3px 5px #000a, 0 0 0 3px #1e1009, 0 4px 6px #0009;
+  text-shadow: 0 1px 2px #000;
+}
+.stanza-card > button:hover, .final-line-control button:hover { filter: brightness(1.15); }
+.stanza-card > button:active, .final-line-control button:active { box-shadow: inset 0 3px 7px #000b, 0 0 0 3px #1e1009; }
+.final-line-control { margin: 16px 0; }
+.final-line-control button { padding: 10px 24px; }
+.keyboard-art { filter: drop-shadow(0 5px 5px #0007); }
+@media (min-width: 901px) {
+  /* Portraits + proportional keyboard consume ~0.71 of the instrument width. */
+  .challenge-open #puzzle { width: min(100%, 1400px, calc((100dvh - 162px) / .71)); }
+  .challenge-open #puzzle.initial-listening { width: min(100%, 1400px, calc((100dvh - 85px) / .86)); }
+  .initial-listening .stanza-readalong { margin-top: 18px; }
+}
+@media (max-width: 900px) {
+  .challenge-open .workshop-layout.puzzle-open { padding: 20px 16px; }
+}
+@media (max-width: 680px) {
+  .challenge-open .workshop-layout.puzzle-open { padding: 18px 12px 26px; }
+}
+
+/* The challenge is a single fitted instrument, never independent scrolling layers. */
+body.challenge-open { height: 100dvh; min-height: 0; overflow: hidden; background-attachment: scroll; }
+.challenge-open .workshop-layout.puzzle-open {
+  position: fixed; inset: 0; width: 100%; height: 100dvh; min-height: 0;
+  margin: 0; padding: 0; overflow: hidden;
+}
+.challenge-open #puzzle,
+.challenge-open #puzzle.initial-listening {
+  position: absolute; left: 50%; top: 50%;
+  width: 1200px; max-width: none; margin: 0; padding: 0;
+  transform: translate(-50%, -50%) scale(var(--instrument-scale, .1));
+  transform-origin: center;
+}
+.challenge-open .stanza-panels { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
+.challenge-open .stanza-card { gap: 12px; }
+.challenge-open .portrait-frame {
+  border: 0; border-radius: 5%; aspect-ratio: 2 / 3;
+  background: url('assets/Weathered Walnut Portrait Frame.png') center / 100% 100%;
+  box-shadow: 0 5px 9px #000b; overflow: hidden;
+}
+.challenge-open .portrait-frame img { inset: 7.6% 9%; width: 82%; height: 84%; object-fit: cover; border-radius: 3%; }
+.challenge-open .portrait-frame::after {
+  content: ''; position: absolute; inset: 7.6% 9% 8.4%; border-radius: 3%; pointer-events: none;
+  box-shadow: inset 0 12px 15px #000b, inset 6px 0 9px #0008, inset -6px 0 9px #0008, inset 0 -5px 7px #0008;
+}
+.challenge-open .portrait-frame.is-playing { box-shadow: 0 0 18px #dda05255, 0 5px 9px #000b; }
+.challenge-open .wooden-button {
+  position: relative; display: block; width: 100%; aspect-ratio: 5.42;
+  min-height: 0; min-width: 0; padding: 0; border: 0; overflow: hidden;
+  border-radius: 5% / 27%; background: transparent; box-shadow: 0 3px 5px #0009;
+}
+.challenge-open .wooden-button img { position: absolute; width: 101%; max-width: none; height: auto; left: -.5%; top: 50%; transform: translateY(-50%); pointer-events: none; }
+.challenge-open .wooden-button:hover { background: transparent; filter: brightness(1.08); }
+.challenge-open .wooden-button:active { box-shadow: 0 1px 2px #0009; transform: translateY(1px); }
+.challenge-open .wooden-button:disabled { opacity: .6; }
+.challenge-open .final-line-control { margin: 16px 0; }
+.challenge-open .final-line-control .wooden-button { width: 430px; }
+@media(max-width:680px) {
+  .challenge-open #puzzle, .challenge-open #puzzle.initial-listening { width: 740px; }
+  .challenge-open .stanza-panels { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+}
+.scene-writing .lantern-glow {
+  z-index: 2;
+  background:
+    radial-gradient(ellipse at 10% 13%, #ffcf887d, #ef9b3d37 12%, transparent 25%),
+    radial-gradient(ellipse at 23% 32%, #ffbb663b, #e49a3917 17%, transparent 37%);
+  mix-blend-mode: screen;
+}

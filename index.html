@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>The Maker's Last Echo</title><link rel="preload" href="assets/FauxAntique.ttf" as="font" type="font/ttf" crossorigin><link rel="stylesheet" href="style.css?v=stanza-handoff-1"></head>
+<body>
+<audio id="prologue-audio" preload="auto" hidden></audio>
+<header class="workshop-title"><p class="eyebrow">THE LAST THRESHOLD</p><h1>The Maker’s Last Echo</h1><p class="intro">What was left in silence may yet be heard.</p></header>
+<div class="workshop-layout" id="layout">
+<aside class="workshop-setting" aria-label="The Maker’s workshop">
+<div class="scene-frame"><div class="scene-stage" id="scene-stage">
+<div class="scene" id="scene"><img id="workshop-image" src="assets/final-room.png" alt="An unoccupied workshop with puzzle figures and maps on the table. A basset hound statue and dragon shield stand in the left doorway; the brass eye medallion hangs above a rune chart and maze on the right." width="1660" height="948"><div class="doorway-glow" aria-hidden="true"></div><div class="floor-spill" aria-hidden="true"></div><div class="light-shaft" aria-hidden="true"></div><div class="air-haze" aria-hidden="true"><i></i><i></i><i></i></div><div id="dust" aria-hidden="true"></div><div class="scene-dimmer" aria-hidden="true"></div></div>
+<div class="scene scene-workbench" id="workbench-scene" hidden>
+  <img id="workbench-image" src="assets/workbench.png" alt="Lantern-lit workbench with a wooden gear mechanism, tools, an ornate box and a framed portrait." width="1672" height="941">
+  <div class="lantern-glow" aria-hidden="true"></div>
+  <div class="light-shaft" aria-hidden="true"></div>
+  <div class="scene-dust" aria-hidden="true"></div>
+</div>
+<div class="scene scene-workbench scene-writing" id="writing-scene" hidden>
+  <img src="assets/poem.png" alt="An unfinished parchment beside a lantern, quill and ink bottle, with a blurred portrait behind the desk." width="1672" height="941">
+  <div class="lantern-glow" aria-hidden="true"></div>
+  <div class="scene-dust" aria-hidden="true"></div>
+</div>
+<div id="prologue-recovery" class="prologue-recovery" hidden>
+  <p role="status">Narration paused or unavailable.</p>
+  <button id="retry-prologue">Resume narration</button>
+</div>
+</div></div>
+<div class="arrival" id="arrival"><p id="intro-status" role="status">The workshop stands empty. Enter when you are ready.</p><div class="controls"><button id="enter-workshop" disabled>Enter the studio</button><button id="resume-workshop" hidden>Resume saved puzzle</button><button id="replay-intro" hidden>Replay Introduction</button></div><p id="motion-status" class="small" hidden></p><p id="scene-status" role="status"></p></div>
+</aside>
+<main id="puzzle" hidden tabindex="-1" aria-label="The Maker’s final line">
+  <div id="stanza-panels" class="stanza-panels"></div>
+  <div id="stanza-readalong" class="stanza-readalong" hidden aria-label="Current stanza"></div>
+  <div class="final-line-control"><button id="complete-line" disabled>Complete the final line</button></div>
+  <div id="stanza-recovery" class="stanza-recovery" hidden>
+    <p id="stanza-status" role="status"></p>
+    <button id="retry-stanza">Retry playback</button>
+  </div>
+  <p id="final-victory" role="status" hidden>The final line is found. The Maker’s work is complete.</p>
+  <p id="save-status" role="status" hidden></p>
+  <div class="keyboard-art" id="keyboard-art">
+    <img id="keyboard-image" alt="Aged handmade piano keyboard">
+    <div id="future-key-regions" role="group" aria-label="Piano keyboard"></div>
+  </div>
+<p id="piano-status" role="status" hidden></p>
+</main>
+</div>
+<dialog id="line-dialog" aria-labelledby="line-label">
+  <form id="line-form">
+    <div class="full-poem-sheet">
+      <img id="full-poem-image" alt="The Maker’s poem, with space for its missing final line">
+      <div id="full-poem-text" class="full-poem-text"></div>
+      <div class="parchment-entry">
+        <label for="missing-line" id="line-label">The missing final line</label>
+        <input id="missing-line" autocomplete="off" spellcheck="false" required>
+      </div>
+    </div>
+    <p id="line-feedback" role="status"></p>
+    <div class="dialog-actions"><button type="submit">Submit</button><button id="cancel-line" type="button">Cancel</button></div>
+  </form>
+</dialog>
+<script type="module" src="app.js?v=stanza-handoff-1"></script></body></html>
