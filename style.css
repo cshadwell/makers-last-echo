@@ -458,3 +458,24 @@ body.challenge-open { height: 100dvh; min-height: 0; overflow: hidden; backgroun
     radial-gradient(ellipse at 23% 32%, #ffbb663b, #e49a3917 17%, transparent 37%);
   mix-blend-mode: screen;
 }
+/* Begin inside the cinematic; audio permission is the only entry fallback. */
+.workshop-title, .arrival { display: none; }
+body.cinematic-entry { background: #000; }
+body.cinematic-entry::after {
+  content: ''; position: fixed; inset: 0; z-index: 40; background: #000;
+  opacity: 0; pointer-events: none; transition: opacity 1.8s ease;
+}
+body.cinematic-entry.opening-black::after { opacity: 1; }
+#skip-prologue {
+  position: fixed; z-index: 60; bottom: max(20px, env(safe-area-inset-bottom));
+  right: max(20px, env(safe-area-inset-right));
+  padding: 9px 13px; font: 13px Georgia, serif;
+  background: #120e09b8; color: #e9d8b8; border: 1px solid #b3915766;
+}
+.prologue-playing .prologue-recovery {
+  position: fixed; z-index: 50; inset: 45% auto auto 50%;
+  transform: translate(-50%, -50%); margin: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  body.cinematic-entry::after { transition: none; }
+}

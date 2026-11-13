@@ -1,6 +1,11 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>The Maker's Last Echo</title><link rel="preload" href="assets/FauxAntique.ttf" as="font" type="font/ttf" crossorigin><link rel="stylesheet" href="style.css?v=stanza-handoff-1"></head>
-<body>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>The Maker's Last Echo</title><link rel="preload" href="assets/FauxAntique.ttf" as="font" type="font/ttf" crossorigin><link rel="stylesheet" href="style.css?v=cinematic-entry-1"></head>
+<body class="prologue-playing cinematic-entry opening-black">
+<button id="skip-prologue" hidden>Skip Prologue</button>
+<div id="prologue-recovery" class="prologue-recovery" hidden>
+  <p role="status">Tap to enable narration, or retry if playback was interrupted.</p>
+  <button id="retry-prologue">Resume narration</button>
+</div>
 <audio id="prologue-audio" preload="auto" hidden></audio>
 <header class="workshop-title"><p class="eyebrow">THE LAST THRESHOLD</p><h1>The Maker’s Last Echo</h1><p class="intro">What was left in silence may yet be heard.</p></header>
 <div class="workshop-layout" id="layout">
@@ -18,10 +23,7 @@
   <div class="lantern-glow" aria-hidden="true"></div>
   <div class="scene-dust" aria-hidden="true"></div>
 </div>
-<div id="prologue-recovery" class="prologue-recovery" hidden>
-  <p role="status">Narration paused or unavailable.</p>
-  <button id="retry-prologue">Resume narration</button>
-</div>
+
 </div></div>
 <div class="arrival" id="arrival"><p id="intro-status" role="status">The workshop stands empty. Enter when you are ready.</p><div class="controls"><button id="enter-workshop" disabled>Enter the studio</button><button id="resume-workshop" hidden>Resume saved puzzle</button><button id="replay-intro" hidden>Replay Introduction</button></div><p id="motion-status" class="small" hidden></p><p id="scene-status" role="status"></p></div>
 </aside>
@@ -56,4 +58,4 @@
     <div class="dialog-actions"><button type="submit">Submit</button><button id="cancel-line" type="button">Cancel</button></div>
   </form>
 </dialog>
-<script type="module" src="app.js?v=stanza-handoff-1"></script></body></html>
+<script type="module" src="app.js?v=cinematic-entry-1"></script></body></html>

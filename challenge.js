@@ -202,7 +202,8 @@ export class FinalChallenge {
 
   prepare() { return this.player.prepare(); }
 
-  prepareEntry({playSequence = false} = {}) {
+  prepareEntry({playSequence = false, skipListening = false} = {}) {
+    if (skipListening) { this.listened = true; this.save(); }
     this.sequential = playSequence || !this.listened;
     this.render();
   }

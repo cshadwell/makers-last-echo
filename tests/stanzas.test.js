@@ -124,3 +124,17 @@ test('prologue handoff hides controls before revealing the challenge or starting
   challenge.enter({playSequence:true});
   assert.equal(starts,1);
 });
+
+test('explicit prologue skip unlocks replay and piano without starting the initial sequence', async () => {
+  const {FinalChallenge} = await import('../challenge.js');
+  const challenge = Object.create(FinalChallenge.prototype);
+  let starts=0, saves=0;
+  Object.assign(challenge,{listened:false,ready:true,player:{active:false,startInitial(){starts++;}},render(){},save(){saves++;},recovery(){}});
+  challenge.prepareEntry({skipListening:true});
+  assert.equal(challenge.listened,true);
+  assert.equal(challenge.sequential,false);
+  assert.equal(starts,0);
+  assert.equal(saves,1);
+  challenge.enter({skipListening:true});
+  assert.equal(starts,0);
+});

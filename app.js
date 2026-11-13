@@ -1,8 +1,8 @@
-import {WorkshopAtmosphere} from './atmosphere.js?v=stanza-handoff-1';
+import {WorkshopAtmosphere} from './atmosphere.js?v=cinematic-entry-1';
 import {NarratedPrologue} from './prologue.js';
-import {config} from './config.js?v=stanza-handoff-1';
+import {config} from './config.js?v=cinematic-entry-1';
 import {readProgress} from './logic.js';
-import {FinalChallenge} from './challenge.js?v=stanza-handoff-1';
+import {FinalChallenge} from './challenge.js?v=cinematic-entry-1';
 const $=id=>document.getElementById(id);
 let storage;try{storage=window.localStorage;}catch{}
 if (new URLSearchParams(location.search).get('reset') === '1') {
@@ -43,7 +43,12 @@ function resetPrologue() {
   }
 }
 
-function openPuzzle() {
+let skipTimer;
+let skipWindowStarted = false;
+function openPuzzle({skipListening = false} = {}) {
+  clearTimeout(skipTimer);
+  $('skip-prologue').hidden = true;
+  document.body.classList.remove('opening-black', 'cinematic-entry');
   const cinematic = document.body.classList.contains('prologue-playing');
   prologue.stop();
   challenge.stop();
@@ -56,7 +61,7 @@ function openPuzzle() {
     element.classList.add('is-still');
   }
   // Stage the listening layout before the first visible challenge frame.
-  challenge.prepareEntry({playSequence: cinematic});
+  challenge.prepareEntry({playSequence: cinematic && !skipListening, skipListening});
   $('puzzle').hidden = false;
   document.body.classList.add('challenge-open');
   $('layout').classList.add('puzzle-open');
@@ -69,7 +74,7 @@ function openPuzzle() {
     document.body.classList.remove('prologue-playing', 'prologue-ending');
     document.body.classList.add('challenge-open');
     $('puzzle').focus({preventScroll: true});
-    challenge.enter({playSequence: cinematic});
+    challenge.enter({playSequence: cinematic && !skipListening, skipListening});
   };
   if (!cinematic || motionPreference.matches) {
     reveal();
@@ -134,17 +139,28 @@ const prologue = new NarratedPrologue({
     atmosphere.start('intro');
     void stage.offsetWidth;
   },
+  onPlaying() {
+    document.body.classList.remove('opening-black');
+    if (!skipWindowStarted) {
+      skipWindowStarted = true;
+      skipTimer = setTimeout(() => { $('skip-prologue').hidden = true; }, 10000);
+    }
+  },
   onAdvance: advanceScene,
   onRetry(show) {
     $('prologue-recovery').hidden = !show;
-    if (show) $('retry-prologue').focus({preventScroll: true});
+    if (show) {
+      $('retry-prologue').textContent = 'Tap to play prologue';
+      $('retry-prologue').focus({preventScroll: true});
+    }
   },
   onReady(ready) {
-    $('enter-workshop').disabled = false;
-    $('replay-intro').disabled = false;
-    $('enter-workshop').textContent = ready ? 'Enter the studio' : 'Retry loading';
-    if (!puzzleOpen) {
-      $('intro-status').textContent = ready ? 'The workshop stands empty.' : 'The prologue could not load. Try again.';
+    if (puzzleOpen) return;
+    $('skip-prologue').hidden = false;
+    if (ready) prologue.start();
+    else {
+      $('prologue-recovery').hidden = false;
+      $('retry-prologue').textContent = 'Retry loading prologue';
     }
   },
 });
@@ -162,7 +178,12 @@ function preparePrologue() {
 $('enter-workshop').onclick = startIntroduction;
 $('replay-intro').onclick = startIntroduction;
 $('resume-workshop').onclick = openPuzzle;
-$('retry-prologue').onclick = () => prologue.retry();
+$('retry-prologue').onclick = () => {
+  if (!prologue.urls) preparePrologue();
+  else if (prologue.phase === 'retry') prologue.retry();
+  else prologue.start();
+};
+$('skip-prologue').onclick = () => openPuzzle({skipListening: true});
 preparePrologue();
 
 for(const [key,value] of Object.entries(visual.doorway))scene.style.setProperty(`--door-${key}`,`${value}%`);
