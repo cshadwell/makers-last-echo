@@ -1,6 +1,37 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>The Maker's Last Echo</title><link rel="preload" href="assets/FauxAntique.ttf" as="font" type="font/ttf" crossorigin><link rel="stylesheet" href="style.css?v=cinematic-entry-1"></head>
-<body class="prologue-playing cinematic-entry opening-black">
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>The Maker's Last Echo</title><link rel="preload" href="assets/FauxAntique.ttf" as="font" type="font/ttf" crossorigin><link rel="stylesheet" href="style.css?v=cottage-entry-1"></head>
+<body class="prologue-playing cinematic-entry opening-black cottage-entry">
+<div id="cottage-entry" class="cottage-entry-screen" aria-label="A lantern-lit cottage doorway">
+<div class="cottage-picture">
+<img src="assets/Antique Brass Dragon Knocker at Night.png" width="1672" height="941" alt="A still wooden cottage door with a brass dragon knocker between two warm leaded windows.">
+<svg viewBox="0 0 1672 941" aria-hidden="true" class="cottage-lighting">
+<defs>
+  <!-- Derive the lead-strip mask from the supplied pixels, rather than painting over the lattice. -->
+  <filter id="glass-luminance" color-interpolation-filters="sRGB">
+    <feColorMatrix type="saturate" values="0"/>
+    <feComponentTransfer><feFuncR type="linear" slope="5" intercept="-1"/><feFuncG type="linear" slope="5" intercept="-1"/><feFuncB type="linear" slope="5" intercept="-1"/></feComponentTransfer>
+  </filter>
+  <mask id="cottage-glass" maskUnits="userSpaceOnUse" x="0" y="0" width="1672" height="941" style="mask-type:luminance">
+    <image href="assets/Antique Brass Dragon Knocker at Night.png" width="1672" height="941" filter="url(#glass-luminance)"/>
+  </mask>
+  <radialGradient id="cottage-reflection"><stop stop-color="#f8a84e" stop-opacity=".36"/><stop offset=".65" stop-color="#df852c" stop-opacity=".14"/><stop offset="1" stop-color="#df852c" stop-opacity="0"/></radialGradient>
+</defs>
+<g data-window="left">
+  <ellipse class="window-reflection" cx="318" cy="350" rx="184" ry="235" fill="url(#cottage-reflection)"/>
+  <g mask="url(#cottage-glass)">
+    <path class="window-dim" d="M225 174 L312 175 L311 285 L219 284 Z M334 176 L420 179 L418 287 L331 285 Z M218 305 L310 307 L309 432 L215 431 Z M332 307 L418 307 L416 432 L330 432 Z"/>
+    <path class="window-warmth" d="M225 174 L312 175 L311 285 L219 284 Z M334 176 L420 179 L418 287 L331 285 Z M218 305 L310 307 L309 432 L215 431 Z M332 307 L418 307 L416 432 L330 432 Z"/>
+  </g>
+</g>
+<g data-window="right">
+  <ellipse class="window-reflection" cx="1358" cy="355" rx="178" ry="238" fill="url(#cottage-reflection)"/>
+  <g mask="url(#cottage-glass)">
+    <path class="window-dim" d="M1257 181 L1344 181 L1346 289 L1259 289 Z M1364 181 L1451 183 L1455 290 L1365 290 Z M1260 310 L1348 310 L1350 438 L1263 436 Z M1366 311 L1456 312 L1458 438 L1370 438 Z"/>
+    <path class="window-warmth" d="M1257 181 L1344 181 L1346 289 L1259 289 Z M1364 181 L1451 183 L1455 290 L1365 290 Z M1260 310 L1348 310 L1350 438 L1263 436 Z M1366 311 L1456 312 L1458 438 L1370 438 Z"/>
+  </g>
+</g>
+</svg>
+</div></div>
 <button id="skip-prologue" hidden>Skip Prologue</button>
 <div id="prologue-recovery" class="prologue-recovery" hidden>
   <p role="status">Tap to enable narration, or retry if playback was interrupted.</p>
@@ -58,4 +89,4 @@
     <div class="dialog-actions"><button type="submit">Submit</button><button id="cancel-line" type="button">Cancel</button></div>
   </form>
 </dialog>
-<script type="module" src="app.js?v=cinematic-entry-1"></script></body></html>
+<script type="module" src="app.js?v=cottage-entry-1"></script></body></html>

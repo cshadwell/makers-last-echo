@@ -1,9 +1,18 @@
-import {WorkshopAtmosphere} from './atmosphere.js?v=cinematic-entry-1';
+import {CottageAtmosphere} from './cottage.js';
+import {WorkshopAtmosphere} from './atmosphere.js?v=cottage-entry-1';
 import {NarratedPrologue} from './prologue.js';
-import {config} from './config.js?v=cinematic-entry-1';
+import {config} from './config.js?v=cottage-entry-1';
 import {readProgress} from './logic.js';
-import {FinalChallenge} from './challenge.js?v=cinematic-entry-1';
+import {FinalChallenge} from './challenge.js?v=cottage-entry-1';
 const $=id=>document.getElementById(id);
+const cottage = new CottageAtmosphere($('cottage-entry'));
+cottage.start();
+function leaveCottage() {
+  cottage.stop();
+  document.body.classList.remove('cottage-entry');
+  $('cottage-entry').classList.add('is-leaving');
+  setTimeout(() => { $('cottage-entry').hidden = true; }, motionPreference.matches ? 0 : 1200);
+}
 let storage;try{storage=window.localStorage;}catch{}
 if (new URLSearchParams(location.search).get('reset') === '1') {
   storage?.removeItem(config.storageKey);
@@ -46,6 +55,7 @@ function resetPrologue() {
 let skipTimer;
 let skipWindowStarted = false;
 function openPuzzle({skipListening = false} = {}) {
+  leaveCottage();
   clearTimeout(skipTimer);
   $('skip-prologue').hidden = true;
   document.body.classList.remove('opening-black', 'cinematic-entry');
@@ -140,6 +150,7 @@ const prologue = new NarratedPrologue({
     void stage.offsetWidth;
   },
   onPlaying() {
+    leaveCottage();
     document.body.classList.remove('opening-black');
     if (!skipWindowStarted) {
       skipWindowStarted = true;
@@ -157,7 +168,10 @@ const prologue = new NarratedPrologue({
   onReady(ready) {
     if (puzzleOpen) return;
     $('skip-prologue').hidden = false;
-    if (ready) prologue.start();
+    if (ready) {
+      $('prologue-recovery').hidden = false;
+      $('retry-prologue').textContent = 'Tap to play prologue';
+    }
     else {
       $('prologue-recovery').hidden = false;
       $('retry-prologue').textContent = 'Retry loading prologue';
