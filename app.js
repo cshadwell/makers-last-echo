@@ -1,9 +1,9 @@
-import {CottageAtmosphere} from './cottage.js?v=knocker-entry-1';
-import {WorkshopAtmosphere} from './atmosphere.js?v=knocker-entry-1';
+import {CottageAtmosphere} from './cottage.js?v=knocker-frames-1';
+import {WorkshopAtmosphere} from './atmosphere.js?v=knocker-frames-1';
 import {NarratedPrologue} from './prologue.js';
-import {config} from './config.js?v=knocker-entry-1';
+import {config} from './config.js?v=knocker-frames-1';
 import {readProgress} from './logic.js';
-import {FinalChallenge} from './challenge.js?v=knocker-entry-1';
+import {FinalChallenge} from './challenge.js?v=knocker-frames-1';
 const $=id=>document.getElementById(id);
 let knockStarted = 0;
 let knockTransition;
@@ -138,7 +138,7 @@ async function advanceScene(index) {
 const prologue = new NarratedPrologue({
   audio: $('prologue-audio'),
   clips: config.prologueClips,
-  images: prologueScenes.map(({element}) => element.querySelector('img')),
+  images: [...prologueScenes.map(({element}) => element.querySelector('img')), ...document.querySelectorAll('.knocker-frame')],
   onScene() {
     resetPrologue();
     challenge.stop();
@@ -152,7 +152,7 @@ const prologue = new NarratedPrologue({
     void stage.offsetWidth;
   },
   onPlaying() {
-    const delay = motionPreference.matches ? 0 : Math.max(0, 700 - (performance.now() - knockStarted));
+    const delay = motionPreference.matches ? 0 : Math.max(0, 1000 - (performance.now() - knockStarted));
     clearTimeout(knockTransition);
     knockTransition = setTimeout(leaveCottage, delay);
     document.body.classList.remove('opening-black');
