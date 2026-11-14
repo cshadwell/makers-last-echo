@@ -1,9 +1,9 @@
-import {CottageAtmosphere} from './cottage.js';
-import {WorkshopAtmosphere} from './atmosphere.js?v=cottage-entry-1';
+import {CottageAtmosphere} from './cottage.js?v=moving-firelight-1';
+import {WorkshopAtmosphere} from './atmosphere.js?v=moving-firelight-1';
 import {NarratedPrologue} from './prologue.js';
-import {config} from './config.js?v=cottage-entry-1';
+import {config} from './config.js?v=moving-firelight-1';
 import {readProgress} from './logic.js';
-import {FinalChallenge} from './challenge.js?v=cottage-entry-1';
+import {FinalChallenge} from './challenge.js?v=moving-firelight-1';
 const $=id=>document.getElementById(id);
 const cottage = new CottageAtmosphere($('cottage-entry'));
 cottage.start();

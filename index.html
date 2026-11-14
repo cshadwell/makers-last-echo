@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>The Maker's Last Echo</title><link rel="preload" href="assets/FauxAntique.ttf" as="font" type="font/ttf" crossorigin><link rel="stylesheet" href="style.css?v=cottage-entry-1"></head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>The Maker's Last Echo</title><link rel="preload" href="assets/FauxAntique.ttf" as="font" type="font/ttf" crossorigin><link rel="stylesheet" href="style.css?v=moving-firelight-1"></head>
 <body class="prologue-playing cinematic-entry opening-black cottage-entry">
 <div id="cottage-entry" class="cottage-entry-screen" aria-label="A lantern-lit cottage doorway">
 <div class="cottage-picture">
@@ -15,19 +15,28 @@
     <image href="assets/Antique Brass Dragon Knocker at Night.png" width="1672" height="941" filter="url(#glass-luminance)"/>
   </mask>
   <radialGradient id="cottage-reflection"><stop stop-color="#f8a84e" stop-opacity=".36"/><stop offset=".65" stop-color="#df852c" stop-opacity=".14"/><stop offset="1" stop-color="#df852c" stop-opacity="0"/></radialGradient>
+
+  <filter id="firelit-texture" color-interpolation-filters="sRGB">
+    <feComponentTransfer><feFuncR type="linear" slope="1.26"/><feFuncG type="linear" slope="1.12"/><feFuncB type="linear" slope=".92"/></feComponentTransfer>
+  </filter>
+  <radialGradient id="fire-patch-falloff"><stop stop-color="white"/><stop offset=".35" stop-color="white" stop-opacity=".85"/><stop offset="1" stop-color="white" stop-opacity="0"/></radialGradient>
+<clipPath id="panes-left" clipPathUnits="userSpaceOnUse"><path d="M225 174 L312 175 L311 285 L219 284 Z M334 176 L420 179 L418 287 L331 285 Z M218 305 L310 307 L309 432 L215 431 Z M332 307 L418 307 L416 432 L330 432 Z"/></clipPath>
+<mask id="fire-left" maskUnits="userSpaceOnUse" x="0" y="0" width="1672" height="941" style="mask-type:luminance"><g data-fire-window="left"><ellipse class="fire-patch" cx="0" cy="0" rx="95" ry="110" fill="url(#fire-patch-falloff)"/><ellipse class="fire-patch" cx="0" cy="0" rx="95" ry="110" fill="url(#fire-patch-falloff)"/><ellipse class="fire-patch" cx="0" cy="0" rx="95" ry="110" fill="url(#fire-patch-falloff)"/></g></mask>
+<clipPath id="panes-right" clipPathUnits="userSpaceOnUse"><path d="M1257 181 L1344 181 L1346 289 L1259 289 Z M1364 181 L1451 183 L1455 290 L1365 290 Z M1260 310 L1348 310 L1350 438 L1263 436 Z M1366 311 L1456 312 L1458 438 L1370 438 Z"/></clipPath>
+<mask id="fire-right" maskUnits="userSpaceOnUse" x="0" y="0" width="1672" height="941" style="mask-type:luminance"><g data-fire-window="right"><ellipse class="fire-patch" cx="0" cy="0" rx="95" ry="110" fill="url(#fire-patch-falloff)"/><ellipse class="fire-patch" cx="0" cy="0" rx="95" ry="110" fill="url(#fire-patch-falloff)"/><ellipse class="fire-patch" cx="0" cy="0" rx="95" ry="110" fill="url(#fire-patch-falloff)"/></g></mask>
 </defs>
 <g data-window="left">
   <ellipse class="window-reflection" cx="318" cy="350" rx="184" ry="235" fill="url(#cottage-reflection)"/>
   <g mask="url(#cottage-glass)">
     <path class="window-dim" d="M225 174 L312 175 L311 285 L219 284 Z M334 176 L420 179 L418 287 L331 285 Z M218 305 L310 307 L309 432 L215 431 Z M332 307 L418 307 L416 432 L330 432 Z"/>
-    <path class="window-warmth" d="M225 174 L312 175 L311 285 L219 284 Z M334 176 L420 179 L418 287 L331 285 Z M218 305 L310 307 L309 432 L215 431 Z M332 307 L418 307 L416 432 L330 432 Z"/>
+    <g clip-path="url(#panes-left)"><image class="window-fire" href="assets/Antique Brass Dragon Knocker at Night.png" width="1672" height="941" filter="url(#firelit-texture)" mask="url(#fire-left)"/></g>
   </g>
 </g>
 <g data-window="right">
   <ellipse class="window-reflection" cx="1358" cy="355" rx="178" ry="238" fill="url(#cottage-reflection)"/>
   <g mask="url(#cottage-glass)">
     <path class="window-dim" d="M1257 181 L1344 181 L1346 289 L1259 289 Z M1364 181 L1451 183 L1455 290 L1365 290 Z M1260 310 L1348 310 L1350 438 L1263 436 Z M1366 311 L1456 312 L1458 438 L1370 438 Z"/>
-    <path class="window-warmth" d="M1257 181 L1344 181 L1346 289 L1259 289 Z M1364 181 L1451 183 L1455 290 L1365 290 Z M1260 310 L1348 310 L1350 438 L1263 436 Z M1366 311 L1456 312 L1458 438 L1370 438 Z"/>
+    <g clip-path="url(#panes-right)"><image class="window-fire" href="assets/Antique Brass Dragon Knocker at Night.png" width="1672" height="941" filter="url(#firelit-texture)" mask="url(#fire-right)"/></g>
   </g>
 </g>
 </svg>
@@ -89,4 +98,4 @@
     <div class="dialog-actions"><button type="submit">Submit</button><button id="cancel-line" type="button">Cancel</button></div>
   </form>
 </dialog>
-<script type="module" src="app.js?v=cottage-entry-1"></script></body></html>
+<script type="module" src="app.js?v=moving-firelight-1"></script></body></html>
