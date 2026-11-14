@@ -1,10 +1,12 @@
-import {CottageAtmosphere} from './cottage.js?v=moving-firelight-1';
-import {WorkshopAtmosphere} from './atmosphere.js?v=moving-firelight-1';
+import {CottageAtmosphere} from './cottage.js?v=knocker-entry-1';
+import {WorkshopAtmosphere} from './atmosphere.js?v=knocker-entry-1';
 import {NarratedPrologue} from './prologue.js';
-import {config} from './config.js?v=moving-firelight-1';
+import {config} from './config.js?v=knocker-entry-1';
 import {readProgress} from './logic.js';
-import {FinalChallenge} from './challenge.js?v=moving-firelight-1';
+import {FinalChallenge} from './challenge.js?v=knocker-entry-1';
 const $=id=>document.getElementById(id);
+let knockStarted = 0;
+let knockTransition;
 const cottage = new CottageAtmosphere($('cottage-entry'));
 cottage.start();
 function leaveCottage() {
@@ -150,7 +152,9 @@ const prologue = new NarratedPrologue({
     void stage.offsetWidth;
   },
   onPlaying() {
-    leaveCottage();
+    const delay = motionPreference.matches ? 0 : Math.max(0, 700 - (performance.now() - knockStarted));
+    clearTimeout(knockTransition);
+    knockTransition = setTimeout(leaveCottage, delay);
     document.body.classList.remove('opening-black');
     if (!skipWindowStarted) {
       skipWindowStarted = true;
@@ -161,7 +165,9 @@ const prologue = new NarratedPrologue({
   onRetry(show) {
     $('prologue-recovery').hidden = !show;
     if (show) {
-      $('retry-prologue').textContent = 'Tap to play prologue';
+      clearTimeout(knockTransition);
+      $('knocker-entry').disabled = false;
+      $('retry-prologue').textContent = 'Retry narration';
       $('retry-prologue').focus({preventScroll: true});
     }
   },
@@ -169,8 +175,8 @@ const prologue = new NarratedPrologue({
     if (puzzleOpen) return;
     $('skip-prologue').hidden = false;
     if (ready) {
-      $('prologue-recovery').hidden = false;
-      $('retry-prologue').textContent = 'Tap to play prologue';
+      $('knocker-entry').disabled = false;
+      $('prologue-recovery').hidden = true;
     }
     else {
       $('prologue-recovery').hidden = false;
@@ -192,10 +198,20 @@ function preparePrologue() {
 $('enter-workshop').onclick = startIntroduction;
 $('replay-intro').onclick = startIntroduction;
 $('resume-workshop').onclick = openPuzzle;
-$('retry-prologue').onclick = () => {
+function playEntry() {
   if (!prologue.urls) preparePrologue();
   else if (prologue.phase === 'retry') prologue.retry();
   else prologue.start();
+}
+$('retry-prologue').onclick = playEntry;
+$('knocker-entry').onclick = () => {
+  if ($('knocker-entry').disabled) return;
+  $('knocker-entry').disabled = true;
+  knockStarted = performance.now();
+  $('cottage-entry').classList.remove('is-knocking');
+  void $('cottage-entry').offsetWidth;
+  $('cottage-entry').classList.add('is-knocking');
+  playEntry();
 };
 $('skip-prologue').onclick = () => openPuzzle({skipListening: true});
 preparePrologue();

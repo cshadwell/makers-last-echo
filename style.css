@@ -499,3 +499,26 @@ body.cottage-entry .prologue-recovery {
 body.cottage-entry .prologue-recovery p { display: none; }
 body.cottage-entry .prologue-recovery button { background: #1b130cd9; box-shadow: 0 3px 12px #000a; }
 @media (prefers-reduced-motion: reduce) { .cottage-entry-screen { transition: none; } }
+/* The image-aligned knocker is the entry button; no visible replacement control. */
+.knocker-entry {
+  position: absolute; z-index: 4; left: 43.5%; top: 21%; width: 12.5%; height: 28%;
+  padding: 0; border: 0; background: transparent; box-shadow: none;
+  pointer-events: auto; cursor: pointer; border-radius: 35%;
+  -webkit-tap-highlight-color: transparent;
+}
+.knocker-entry:hover, .knocker-entry:active { background: transparent; }
+.knocker-entry:disabled { opacity: 1; cursor: default; }
+.knocker-entry:focus-visible { outline: 2px solid #d3ae69; outline-offset: 3px; }
+.knocker-ring-layer {
+  position: absolute; z-index: 3; left: 45.4545%; top: 34.1126%; width: 8.7321%; height: 14.3464%;
+  pointer-events: none; transform-origin: 50% 0;
+  -webkit-mask-image: radial-gradient(ellipse, #000 60%, transparent 74%);
+  mask-image: radial-gradient(ellipse, #000 60%, transparent 74%);
+}
+.is-knocking .knocker-ring-layer { animation: knocker-tap .7s ease-in-out both; }
+@keyframes knocker-tap {
+  0%, 42%, 74%, 100% { transform: perspective(350px) rotateX(0); }
+  23% { transform: perspective(350px) rotateX(20deg); }
+  60% { transform: perspective(350px) rotateX(9deg); }
+}
+@media(prefers-reduced-motion:reduce) { .is-knocking .knocker-ring-layer { animation: none; } }
