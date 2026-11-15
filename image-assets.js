@@ -1,5 +1,6 @@
 // Web derivatives only; original supplied files remain in assets/.
 export const imageAssets = {
+  "Finished Walnut Piano by the Fireside.png": "web/finished-piano.jpg",
   "Antique Brass Dragon Knocker at Night.png": "web/cottage.jpg",
   "final-room.png": "web/workshop.jpg",
   "workbench.png": "web/workbench.jpg",

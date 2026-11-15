@@ -4,6 +4,7 @@ from concurrent.futures import ThreadPoolExecutor
 import subprocess,json
 root=Path(__file__).resolve().parent.parent
 specs=[
+ ('Finished Walnut Piano by the Fireside.png','finished-piano.jpg',1672,88),
  ('Antique Brass Dragon Knocker at Night.png','cottage.jpg',1672,86),
  ('final-room.png','workshop.jpg',1660,86),('workbench.png','workbench.jpg',1672,86),('poem.png','writing-desk.jpg',1672,88),
  ('Antique Handcrafted Piano Keyboard.png','keyboard.jpg',1800,90),('instrument-walnut.png','walnut.jpg',1600,82),

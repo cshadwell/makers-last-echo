@@ -1,10 +1,10 @@
-import {KnockEntry} from './knock-entry.js?v=entrance-first-1';
-import {CottageAtmosphere} from './cottage.js?v=entrance-first-1';
-import {WorkshopAtmosphere} from './atmosphere.js?v=entrance-first-1';
-import {NarratedPrologue} from './prologue.js?v=entrance-first-1';
-import {config} from './config.js?v=entrance-first-1';
+import {KnockEntry} from './knock-entry.js?v=finished-piano-1';
+import {CottageAtmosphere} from './cottage.js?v=finished-piano-1';
+import {WorkshopAtmosphere} from './atmosphere.js?v=finished-piano-1';
+import {NarratedPrologue} from './prologue.js?v=finished-piano-1';
+import {config} from './config.js?v=finished-piano-1';
 import {readProgress} from './logic.js';
-import {FinalChallenge} from './challenge.js?v=entrance-first-1';
+import {FinalChallenge} from './challenge.js?v=finished-piano-1';
 import {loadEntrance, loadImage} from './loading.js';
 const $ = id => document.getElementById(id);
 let storage; try { storage = window.localStorage; } catch {}
@@ -27,6 +27,7 @@ const prologueScenes = [
   {element: scene, effects: new WorkshopAtmosphere(scene, config.visuals)},
   {element: $('workbench-scene'), effects: new WorkshopAtmosphere($('workbench-scene'), config.workbenchVisuals)},
   {element: $('writing-scene'), effects: new WorkshopAtmosphere($('writing-scene'), config.writingVisuals)},
+  {element: $('finished-piano-scene'), effects: new WorkshopAtmosphere($('finished-piano-scene'), config.finishedPianoVisuals)},
 ];
 for (const [key, value] of Object.entries(config.visuals.doorway)) scene.style.setProperty(`--door-${key}`, `${value}%`);
 
@@ -82,6 +83,7 @@ async function stageLaterContent() {
     // One upcoming scene at a time. None of this competes with the entrance.
     await prologue.prepareClip(1);
     await prologue.prepareClip(2);
+    await prologue.prepareClip(3);
     await ensureChallenge();
   })().catch(() => { laterTask = null; });
   return laterTask;

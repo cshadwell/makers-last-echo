@@ -38,7 +38,7 @@ export const config = {
       {audio: 'Stanza4.mp3', endAt: 19.40, sharp: 'The maker’s unwritten ending.png', blurred: 'The maker’s unwritten ending copy2.png'},
     ],
   },
-  prologueClips: ['assets/1.mp3', 'assets/2.mp3', 'assets/3.mp3'],
+  prologueClips: ['assets/1.mp3', 'assets/2.mp3', 'assets/3.mp3', 'assets/prologue4.mp3'],
   visuals: {
     image: './assets/web/workshop.jpg',
     dustDensity: 144, // Dense fine dust, with a few blurred foreground motes.
@@ -73,5 +73,6 @@ export const config = {
     entranceSeconds: 2,
     entranceSwirlSeconds: 0,
   },
+  finishedPianoVisuals: {fireplace:true, dustDensity:38, particleVisibility:.85, glowStrength:0, beamOpacity:0, entranceSeconds:2, entranceSwirlSeconds:0},
   completion: 'The last echo settles. You have heard what time concealed. Your journey is complete. Leave your name, and the Maker may place the gift in your hands.',
 };

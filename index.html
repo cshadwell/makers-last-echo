@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><link rel="preload" as="image" href="assets/web/cottage.jpg" fetchpriority="high"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>The Maker's Last Echo</title><link rel="stylesheet" href="style.css?v=entrance-first-1"></head>
+<html lang="en"><head><link rel="preload" as="image" href="assets/web/cottage.jpg" fetchpriority="high"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>The Maker's Last Echo</title><link rel="stylesheet" href="style.css?v=finished-piano-1"></head>
 <body class="prologue-playing cinematic-entry opening-black cottage-entry">
 <div id="cottage-entry" class="cottage-entry-screen" aria-label="A lantern-lit cottage doorway">
 <div class="cottage-picture">
@@ -66,6 +66,22 @@
   <div class="scene-dust" aria-hidden="true"></div>
 </div>
 
+<div class="scene scene-workbench scene-finished-piano" id="finished-piano-scene" hidden>
+ <div class="finished-piano-art">
+ <img data-src="assets/web/finished-piano.jpg" alt="The finished walnut piano with four blank parchment windows beside a warm fireplace." width="1672" height="941">
+ <svg class="piano-firelight" viewBox="0 0 1672 941" aria-hidden="true">
+ <defs>
+ <clipPath id="piano-fire-opening"><path d="M1306 222 Q1406 177 1511 217 L1530 244 L1520 359 Q1470 357 1430 363 L1406 378 L1293 378 L1284 348 L1285 254Z"/></clipPath>
+ <radialGradient id="piano-flame-soft"><stop stop-color="#ffd67e" stop-opacity=".78"/><stop offset=".48" stop-color="#f27c18" stop-opacity=".48"/><stop offset="1" stop-color="#d95208" stop-opacity="0"/></radialGradient>
+ <radialGradient id="piano-reflection-soft"><stop stop-color="#ee962c" stop-opacity=".3"/><stop offset="1" stop-color="#d47c1e" stop-opacity="0"/></radialGradient>
+ </defs>
+ <g clip-path="url(#piano-fire-opening)"><path fill="#160a03" opacity=".30" d="M1250 170H1550V390H1250Z"/>
+ <g class="fire-patches" style="mix-blend-mode:screen"><ellipse class="fire-patch" cx="0" cy="0" rx="35" ry="53" fill="url(#piano-flame-soft)"/><ellipse class="fire-patch" cx="0" cy="0" rx="35" ry="53" fill="url(#piano-flame-soft)"/><ellipse class="fire-patch" cx="0" cy="0" rx="35" ry="53" fill="url(#piano-flame-soft)"/><ellipse class="fire-patch" cx="0" cy="0" rx="35" ry="53" fill="url(#piano-flame-soft)"/><ellipse class="fire-patch" cx="0" cy="0" rx="35" ry="53" fill="url(#piano-flame-soft)"/><ellipse class="fire-patch" cx="0" cy="0" rx="35" ry="53" fill="url(#piano-flame-soft)"/></g></g>
+ <g class="fire-reflections" style="mix-blend-mode:soft-light"><ellipse cx="1366" cy="392" rx="114" ry="24" fill="url(#piano-reflection-soft)"/><ellipse cx="1258" cy="360" rx="24" ry="106" fill="url(#piano-reflection-soft)"/><ellipse cx="1541" cy="338" rx="25" ry="104" fill="url(#piano-reflection-soft)"/></g>
+ </svg><div class="scene-dust" aria-hidden="true"></div>
+ </div>
+</div>
+
 </div></div>
 <div class="arrival" id="arrival"><p id="intro-status" role="status">The workshop stands empty. Enter when you are ready.</p><div class="controls"><button id="enter-workshop" disabled>Enter the studio</button><button id="resume-workshop" hidden>Resume saved puzzle</button><button id="replay-intro" hidden>Replay Introduction</button></div><p id="motion-status" class="small" hidden></p><p id="scene-status" role="status"></p></div>
 </aside>
@@ -100,4 +116,4 @@
     <div class="dialog-actions"><button type="submit">Submit</button><button id="cancel-line" type="button">Cancel</button></div>
   </form>
 </dialog>
-<script type="module" src="app.js?v=entrance-first-1"></script></body></html>
+<script type="module" src="app.js?v=finished-piano-1"></script></body></html>

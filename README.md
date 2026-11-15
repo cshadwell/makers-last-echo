@@ -41,3 +41,5 @@ Arrival loads the cottage image first, activates its window lighting, decodes fo
 After knocking, the cottage fades to black. The first workshop is decoded before it is revealed; narration and the ten-second Skip Prologue window begin after that reveal. There is no loading message or skip control on the cottage. Actual failures expose a retry control.
 
 A no-cache local test with a shared 4 Mbps limit completed the cottage image transfer in approximately 1.4 seconds and the entry assets in 2.3 seconds. These are controlled test observations, not a guarantee for every network or device. Test real mobile Safari and the final Dungeon portal separately.
+
+The fourth prologue scene uses the supplied `prologue4.mp3` unchanged and a web derivative of `Finished Walnut Piano by the Fireside.png`. Its fireplace uses an image-coordinate SVG clip, a local darkening base, six independently moving soft light patches, and separate low-strength reflections. Dust and fire share the existing atmosphere loop; reduced motion uses steady illumination. The scene follows the writing desk and advances only when its narration ends.
