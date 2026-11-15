@@ -73,6 +73,6 @@ export const config = {
     entranceSeconds: 2,
     entranceSwirlSeconds: 0,
   },
-  finishedPianoVisuals: {fireplace:true, dustDensity:38, particleVisibility:.85, glowStrength:0, beamOpacity:0, entranceSeconds:2, entranceSwirlSeconds:0},
+  finishedPianoVisuals: {dustDensity:38, particleVisibility:.85, glowStrength:0, beamOpacity:0, entranceSeconds:2, entranceSwirlSeconds:0},
   completion: 'The last echo settles. You have heard what time concealed. Your journey is complete. Leave your name, and the Maker may place the gift in your hands.',
 };

@@ -526,5 +526,8 @@ body.studio-reveal::after { transition-duration: 1s; }
 /* The image and coordinate-based effects share one proportional surface, including camera push. */
 .finished-piano-art{position:absolute;left:50%;top:50%;width:min(100%, calc(100dvh * 1.776833));height:auto;aspect-ratio:1672/941;transform:translate(-50%,-50%)}
 .scene-finished-piano .finished-piano-art img{width:100%;height:100%;object-fit:fill}
-.piano-firelight{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
 @media(prefers-reduced-motion:reduce){.scene-finished-piano .scene-dust{display:none}}
+
+#handoff-curtain{position:fixed;inset:0;z-index:1000;background:#000;opacity:0;pointer-events:none;transition:opacity 2s ease-in-out}
+#handoff-curtain.is-black{opacity:1;pointer-events:auto}
+@media(prefers-reduced-motion:reduce){#handoff-curtain{transition:none}}

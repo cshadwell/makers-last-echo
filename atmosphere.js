@@ -6,8 +6,6 @@ export class WorkshopAtmosphere {
     this.preference.addEventListener?.('change',()=>{if(this.preference.matches)this.pause();else if(this.mode!=='idle')this.start(this.mode);});
     this.haze=[...scene.querySelectorAll('.air-haze i')];
     this.beam=scene.querySelector('.light-shaft');
-    this.firePatches=[...scene.querySelectorAll(".fire-patch")];
-    this.reflections=scene.querySelector(".fire-reflections");
     this.particles=[];
     const dust=scene.querySelector('#dust, .scene-dust');
     for(let i=0;i<Math.min(220,Math.max(0,settings.dustDensity));i++){
@@ -29,7 +27,7 @@ export class WorkshopAtmosphere {
     this.pause();const previous=this.mode;this.mode=mode;
     if(mode==='intro'||previous==='idle')this.started=performance.now();
     if(mode==='puzzle')this.settledAt=performance.now();
-    if(this.preference.matches){if(this.settings.fireplace)this.render(this.started+2000);return;}
+    if(this.preference.matches)return;
     const tick=now=>{
       if(!this.last||now-this.last>32){this.last=now;this.render(now);}
       this.frame=requestAnimationFrame(tick);
@@ -38,16 +36,6 @@ export class WorkshopAtmosphere {
   }
   render(now){
     const s=this.settings,t=(now-this.started)/1000;
-    this.firePatches.forEach((patch,i)=>{
-      const phase=t*(.29+i*.037)+i*.93;
-      const rise=(phase%1+1)%1;
-      const x=1320+i*30+13*Math.sin(t*(.91+i*.08)+i*2.1);
-      const y=363-rise*139;
-      const envelope=Math.sin(Math.PI*rise);
-      patch.setAttribute('transform',`translate(${x} ${y}) scale(${.75+.22*Math.sin(t*1.7+i)} ${.75+.45*Math.sin(t*.8+i)**2})`);
-      patch.setAttribute('opacity',.08+envelope*(.65+.12*Math.sin(t*7.1+i*2)));
-    });
-    this.reflections?.setAttribute('opacity',.55+.17*Math.sin(t*1.9)+.11*Math.sin(t*3.7+1));
     const build=Math.min(1,t/s.entranceSeconds),ease=build*build*(3-2*build);
     const quiet=this.mode==='puzzle'?Math.min(1,(now-this.settledAt)/1800):0;
     const intensity=1-quiet*(1-(s.puzzleAtmosphere ?? 1));

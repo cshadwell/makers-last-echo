@@ -1,10 +1,10 @@
-import {KnockEntry} from './knock-entry.js?v=finished-piano-1';
-import {CottageAtmosphere} from './cottage.js?v=finished-piano-1';
-import {WorkshopAtmosphere} from './atmosphere.js?v=finished-piano-1';
-import {NarratedPrologue} from './prologue.js?v=finished-piano-1';
-import {config} from './config.js?v=finished-piano-1';
+import {KnockEntry} from './knock-entry.js?v=poem-fade-1';
+import {CottageAtmosphere} from './cottage.js?v=poem-fade-1';
+import {WorkshopAtmosphere} from './atmosphere.js?v=poem-fade-1';
+import {NarratedPrologue} from './prologue.js?v=poem-fade-1';
+import {config} from './config.js?v=poem-fade-1';
 import {readProgress} from './logic.js';
-import {FinalChallenge} from './challenge.js?v=finished-piano-1';
+import {FinalChallenge} from './challenge.js?v=poem-fade-1';
 import {loadEntrance, loadImage} from './loading.js';
 const $ = id => document.getElementById(id);
 let storage; try { storage = window.localStorage; } catch {}
@@ -194,14 +194,26 @@ async function openPuzzle({skipListening = false} = {}) {
   game.stop(); game.prepareEntry({playSequence: cinematic && !skipListening, skipListening});
   puzzleOpen = true; state.introSeen = true;
   try { storage?.setItem(config.storageKey, JSON.stringify(state)); } catch {}
+  const slowHandoff = cinematic && !skipListening;
+  const curtain = $('handoff-curtain');
+  if (slowHandoff) {
+    curtain.classList.add('is-black');
+    await waitForFade(curtain, 2100);
+    if (run !== flowRun) return;
+  }
   $('puzzle').hidden = false; $('layout').classList.add('puzzle-open');
   document.body.classList.add('challenge-open');
-  document.body.classList.remove('opening-black', 'cinematic-entry', 'studio-reveal');
-  if (cinematic && !motionPreference.matches) {
-    document.body.classList.add('prologue-ending'); await waitForFade(stage, 850);
+  document.body.classList.remove('opening-black', 'cinematic-entry', 'studio-reveal', 'prologue-playing', 'prologue-ending');
+  if (slowHandoff) {
+    // Let the player see and read the first parchment before its recording starts.
+    game.reveal(0);
+    void curtain.offsetWidth;
+    curtain.classList.remove('is-black');
+    await waitForFade(curtain, 2100);
+    if (run !== flowRun) return;
+    await new Promise(resolve => setTimeout(resolve, 1000));
   }
   if (run !== flowRun) return;
-  document.body.classList.remove('prologue-playing', 'prologue-ending');
   $('puzzle').focus({preventScroll: true});
   game.enter({playSequence: cinematic && !skipListening, skipListening});
 }
