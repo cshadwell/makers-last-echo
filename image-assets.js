@@ -1,0 +1,29 @@
+// Web derivatives only; original supplied files remain in assets/.
+export const imageAssets = {
+  "Antique Brass Dragon Knocker at Night.png": "web/cottage.jpg",
+  "final-room.png": "web/workshop.jpg",
+  "workbench.png": "web/workbench.jpg",
+  "poem.png": "web/writing-desk.jpg",
+  "Antique Handcrafted Piano Keyboard.png": "web/keyboard.jpg",
+  "instrument-walnut.png": "web/walnut.jpg",
+  "Weathered Walnut Portrait Frame.png": "web/portrait-frame.jpg",
+  "aged-parchment.png": "web/parchment.png",
+  "Cozy cottage hearth with sleeping basset.png": "web/portrait-1.jpg",
+  "The Maker's First Spark.png": "web/portrait-2.jpg",
+  "Carved hands, empty chair.png": "web/portrait-3.jpg",
+  "The maker’s unwritten ending.png": "web/portrait-4.jpg",
+  "Cozy cottage hearth with sleeping basset copy2.png": "web/portrait-1-blurred.jpg",
+  "The Maker's First Spark copy2.png": "web/portrait-2-blurred.jpg",
+  "Carved hands, empty chair copy2.png": "web/portrait-3-blurred.jpg",
+  "The maker’s unwritten ending copy2.png": "web/portrait-4-blurred.jpg",
+  "button1.png": "web/button-1.jpg",
+  "button2.png": "web/button-2.jpg",
+  "button3.png": "web/button-3.jpg",
+  "button4.png": "web/button-4.jpg",
+  "complete_button.png": "web/complete-button.jpg",
+  "knocker/k1.png": "web/knocker-1.jpg",
+  "knocker/k2.png": "web/knocker-2.jpg",
+  "knocker/k3.png": "web/knocker-3.jpg",
+  "knocker/k4.png": "web/knocker-4.jpg"
+};
+export const assetURL = filename => new URL(`assets/${imageAssets[filename] || filename}`, import.meta.url).href;

@@ -1,8 +1,8 @@
 import {fitInstrument} from './instrument-fit.js';
-import {SamplePiano} from './sample-piano.js?v=correct-piano-2';
-import {NarratedPrologue} from './prologue.js';
+import {SamplePiano} from './sample-piano.js?v=entrance-first-1';
+import {NarratedPrologue} from './prologue.js?v=entrance-first-1';
 
-const asset = filename => new URL(`assets/${filename}`, import.meta.url).href;
+import {assetURL as asset} from './image-assets.js';
 
 export const validFinalLine = text =>
   text.trim().replace(/\.$/, '').trim().toUpperCase().replace(/\s+/g, ' ') === 'A FADED AGE DEFACED';
@@ -210,6 +210,7 @@ export class FinalChallenge {
 
   enter(options = {}) {
     this.entered = true;
+    this.piano?.preload();
     this.prepareEntry(options);
     if (!this.sequential) return;
     if (this.ready) this.startInitial();

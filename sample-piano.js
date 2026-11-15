@@ -50,9 +50,16 @@ export class SamplePiano {
       });
       root.append(key);
       this.keys.push(key);
-      // Download samples early, while the prologue or initial poem is playing.
-      if (region.available) this.download(region.id).catch(() => {});
+
     }
+  }
+
+  preload() {
+    if (this.preloading) return this.preloading;
+    const queue = this.keys.filter(key => key.dataset.available === 'true').map(key => key.dataset.sample);
+    const worker = async () => { while (queue.length) { try { await this.download(queue.shift()); } catch {} } };
+    this.preloading = Promise.all([worker(), worker()]);
+    return this.preloading;
   }
 
   download(id) {

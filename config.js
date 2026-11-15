@@ -40,7 +40,7 @@ export const config = {
   },
   prologueClips: ['assets/1.mp3', 'assets/2.mp3', 'assets/3.mp3'],
   visuals: {
-    image: './assets/final-room.png',
+    image: './assets/web/workshop.jpg',
     dustDensity: 144, // Dense fine dust, with a few blurred foreground motes.
     particleVisibility: 0.82,
     glowStrength: 0.60,

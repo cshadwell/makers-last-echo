@@ -367,7 +367,7 @@ body{background:#0d0e0d}.workshop-title{padding:20px 18px 4px}.workshop-title h1
 .challenge-open {
   min-height: 100dvh;
   background: radial-gradient(ellipse at 50% 35%, #0000 20%, #09040188 100%),
-    url('assets/instrument-walnut.png') center / cover fixed;
+    url('assets/web/walnut.jpg') center / cover fixed;
 }
 .challenge-open .workshop-layout.puzzle-open {
   max-width: none;
@@ -387,7 +387,7 @@ body{background:#0d0e0d}.workshop-title{padding:20px 18px 4px}.workshop-title h1
   box-shadow: 0 1px 0 #daaa643d, 0 0 0 3px #1c0d08, inset 0 8px 15px #000b;
 }
 .stanza-card > button, .final-line-control button {
-  background: linear-gradient(#362219bd, #120b07d9), url('assets/instrument-walnut.png') center / 600px auto;
+  background: linear-gradient(#362219bd, #120b07d9), url('assets/web/walnut.jpg') center / 600px auto;
   border: 2px ridge #99713c;
   box-shadow: inset 0 2px 4px #eec38825, inset 0 -3px 5px #000a, 0 0 0 3px #1e1009, 0 4px 6px #0009;
   text-shadow: 0 1px 2px #000;
@@ -427,7 +427,7 @@ body.challenge-open { height: 100dvh; min-height: 0; overflow: hidden; backgroun
 .challenge-open .stanza-card { gap: 12px; }
 .challenge-open .portrait-frame {
   border: 0; border-radius: 5%; aspect-ratio: 2 / 3;
-  background: url('assets/Weathered Walnut Portrait Frame.png') center / 100% 100%;
+  background: url('assets/web/portrait-frame.jpg') center / 100% 100%;
   box-shadow: 0 5px 9px #000b; overflow: hidden;
 }
 .challenge-open .portrait-frame img { inset: 7.6% 9%; width: 82%; height: 84%; object-fit: cover; border-radius: 3%; }
@@ -517,3 +517,8 @@ body.cottage-entry .prologue-recovery button { background: #1b130cd9; box-shadow
 }
 .knocker-frame { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; }
 .knocker-frame-1 { opacity: 1; }
+
+/* A true fade through black: narration waits until the workshop is visible. */
+.cottage-entry-screen { background: #000; transition-duration: .65s; }
+body.studio-reveal::after { transition-duration: 1s; }
+.cottage-entry-screen.is-leaving .knocker-entry { pointer-events: none; }

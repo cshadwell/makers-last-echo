@@ -1,7 +1,8 @@
+import {loadImage, fetchRecording} from './loading.js';
 // One media element carries the initial user gesture across the three clips.
 export class NarratedPrologue {
-  constructor({audio, clips, images, onScene, onAdvance, onRetry, onReady, onPlaying, holdMs = 500}) {
-    Object.assign(this, {audio, clips, images, onScene, onAdvance, onRetry, onReady, onPlaying, holdMs});
+  constructor({audio, clips, images, onScene, onAdvance, onRetry, onReady, onPlaying, holdMs = 500, progressive = false}) {
+    Object.assign(this, {audio, clips, images, onScene, onAdvance, onRetry, onReady, onPlaying, holdMs, progressive});
     this.phase = 'idle';
     this.run = 0;
     this.playAttempt = 0;
@@ -29,35 +30,49 @@ export class NarratedPrologue {
 
   get active() { return this.phase !== 'idle'; }
 
-  async prepare() {
-    if (this.urls || this.preparing) return;
-    this.preparing = true;
-    try {
-      const [recordings] = await Promise.all([
-        Promise.all(this.clips.map(async path => {
-          const response = await fetch(path);
-          if (!response.ok) throw new Error('Recording unavailable');
-          const recording = await response.blob();
-          if (!recording.size) throw new Error('Empty recording');
-          return recording;
-        })),
-        Promise.all(this.images.map(image => image.decode())),
-      ]);
-      this.urls = recordings.map(recording => URL.createObjectURL(recording));
-      this.onReady(true);
-    } catch {
-      this.onReady(false);
-    } finally {
-      this.preparing = false;
+  async prepareClip(index) {
+    if (this.urls?.[index]) return;
+    this.clipLoads ||= [];
+    if (!this.clipLoads[index]) {
+      this.clipLoads[index] = (async () => {
+        const [blob] = await Promise.all([fetchRecording(this.clips[index]), loadImage(this.images[index])]);
+        this.urls ||= [];
+        this.urls[index] = URL.createObjectURL(blob);
+      })().catch(error => { this.clipLoads[index] = null; throw error; });
     }
+    return this.clipLoads[index];
   }
 
-  start(index = 0) {
-    if (!this.urls || this.active) return;
+  async prepare() {
+    if (this.preparing) return this.preparing;
+    if (this.progressive ? this.urls?.[0] : this.clips.every((_, index) => this.urls?.[index])) return true;
+    this.preparing = (async () => {
+      try {
+        if (this.progressive) await this.prepareClip(0);
+        else {
+          const [recordings] = await Promise.all([
+            Promise.all(this.clips.map(fetchRecording)),
+            Promise.all(this.images.map(loadImage)),
+          ]);
+          this.urls = recordings.map(recording => URL.createObjectURL(recording));
+        }
+        this.onReady(true);
+        return true;
+      } catch {
+        this.onReady(false);
+        return false;
+      } finally { this.preparing = null; }
+    })();
+    return this.preparing;
+  }
+
+  start(index = 0, {deferPlayback = false} = {}) {
+    if (!this.urls?.[index] || this.active) return;
     this.index = index;
+    this.phase = 'transition';
     this.onScene();
     this.loadClip();
-    this.play();
+    if (!deferPlayback) this.play();
   }
 
   loadClip(position = 0) {
@@ -97,6 +112,11 @@ export class NarratedPrologue {
 
   retry() {
     if (this.phase !== 'retry') return;
+    if (Number.isInteger(this.pendingIndex)) {
+      this.phase = 'transition';
+      this.finishAdvance(this.run);
+      return;
+    }
     if (this.audio.error) this.loadClip(this.position);
     this.play();
   }
@@ -107,16 +127,29 @@ export class NarratedPrologue {
     const run = this.run;
     await new Promise(resolve => setTimeout(resolve, this.holdMs));
     if (run !== this.run) return;
-    await this.onAdvance(this.index + 1);
-    if (run !== this.run || this.index + 1 >= this.clips.length) return;
-    this.index++;
-    this.loadClip();
-    this.play();
+    this.pendingIndex = this.index + 1;
+    await this.finishAdvance(run);
+  }
+
+  async finishAdvance(run) {
+    const next = this.pendingIndex;
+    try {
+      if (this.progressive && next < this.clips.length) await this.prepareClip(next);
+      if (run !== this.run) return;
+      await this.onAdvance(next);
+      if (run !== this.run) return;
+      this.pendingIndex = undefined;
+      if (next >= this.clips.length) return;
+      this.index = next;
+      this.loadClip();
+      this.play();
+    } catch { if (run === this.run) this.fail(); }
   }
 
   stop() {
     this.run++;
     this.phase = 'idle';
+    this.pendingIndex = undefined;
     this.clearPlaybackTimer();
     this.audio.pause();
     this.audio.removeAttribute('src');

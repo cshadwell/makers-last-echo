@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>The Maker's Last Echo</title><link rel="preload" href="assets/FauxAntique.ttf" as="font" type="font/ttf" crossorigin><link rel="stylesheet" href="style.css?v=three-knocks-1"></head>
+<html lang="en"><head><link rel="preload" as="image" href="assets/web/cottage.jpg" fetchpriority="high"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>The Maker's Last Echo</title><link rel="stylesheet" href="style.css?v=entrance-first-1"></head>
 <body class="prologue-playing cinematic-entry opening-black cottage-entry">
 <div id="cottage-entry" class="cottage-entry-screen" aria-label="A lantern-lit cottage doorway">
 <div class="cottage-picture">
-<img src="assets/Antique Brass Dragon Knocker at Night.png" width="1672" height="941" alt="A still wooden cottage door with a brass dragon knocker between two warm leaded windows.">
+<img id="cottage-image" src="assets/web/cottage.jpg" fetchpriority="high" width="1672" height="941" alt="A still wooden cottage door with a brass dragon knocker between two warm leaded windows.">
 <button id="knocker-entry" class="knocker-entry" aria-label="Knock to enter the studio" title="Knock to enter the studio" disabled></button>
-<div class="knocker-frames" aria-hidden="true"><img class="knocker-frame knocker-frame-1" src="assets/knocker/k1.png" width="1002" height="1406" alt=""><img class="knocker-frame knocker-frame-2" src="assets/knocker/k2.png" width="1002" height="1406" alt=""><img class="knocker-frame knocker-frame-3" src="assets/knocker/k3.png" width="1002" height="1406" alt=""><img class="knocker-frame knocker-frame-4" src="assets/knocker/k4.png" width="1002" height="1406" alt=""></div>
-<svg viewBox="0 0 1672 941" aria-hidden="true" class="cottage-lighting">
+<div class="knocker-frames" aria-hidden="true"><img class="knocker-frame knocker-frame-1" data-src="assets/web/knocker-1.jpg" width="320" height="449" alt=""><img class="knocker-frame knocker-frame-2" data-src="assets/web/knocker-2.jpg" width="320" height="449" alt=""><img class="knocker-frame knocker-frame-3" data-src="assets/web/knocker-3.jpg" width="320" height="449" alt=""><img class="knocker-frame knocker-frame-4" data-src="assets/web/knocker-4.jpg" width="320" height="449" alt=""></div>
+<svg viewBox="0 0 1672 941" aria-hidden="true" class="cottage-lighting" hidden>
 <defs>
   <!-- Derive the lead-strip mask from the supplied pixels, rather than painting over the lattice. -->
   <filter id="glass-luminance" color-interpolation-filters="sRGB">
@@ -14,7 +14,7 @@
     <feComponentTransfer><feFuncR type="linear" slope="5" intercept="-1"/><feFuncG type="linear" slope="5" intercept="-1"/><feFuncB type="linear" slope="5" intercept="-1"/></feComponentTransfer>
   </filter>
   <mask id="cottage-glass" maskUnits="userSpaceOnUse" x="0" y="0" width="1672" height="941" style="mask-type:luminance">
-    <image href="assets/Antique Brass Dragon Knocker at Night.png" width="1672" height="941" filter="url(#glass-luminance)"/>
+    <image data-href="assets/web/cottage.jpg" width="1672" height="941" filter="url(#glass-luminance)"/>
   </mask>
   <radialGradient id="cottage-reflection"><stop stop-color="#f8a84e" stop-opacity=".36"/><stop offset=".65" stop-color="#df852c" stop-opacity=".14"/><stop offset="1" stop-color="#df852c" stop-opacity="0"/></radialGradient>
 
@@ -31,14 +31,14 @@
   <ellipse class="window-reflection" cx="318" cy="350" rx="184" ry="235" fill="url(#cottage-reflection)"/>
   <g mask="url(#cottage-glass)">
     <path class="window-dim" d="M225 174 L312 175 L311 285 L219 284 Z M334 176 L420 179 L418 287 L331 285 Z M218 305 L310 307 L309 432 L215 431 Z M332 307 L418 307 L416 432 L330 432 Z"/>
-    <g clip-path="url(#panes-left)"><image class="window-fire" href="assets/Antique Brass Dragon Knocker at Night.png" width="1672" height="941" filter="url(#firelit-texture)" mask="url(#fire-left)"/></g>
+    <g clip-path="url(#panes-left)"><image class="window-fire" data-href="assets/web/cottage.jpg" width="1672" height="941" filter="url(#firelit-texture)" mask="url(#fire-left)"/></g>
   </g>
 </g>
 <g data-window="right">
   <ellipse class="window-reflection" cx="1358" cy="355" rx="178" ry="238" fill="url(#cottage-reflection)"/>
   <g mask="url(#cottage-glass)">
     <path class="window-dim" d="M1257 181 L1344 181 L1346 289 L1259 289 Z M1364 181 L1451 183 L1455 290 L1365 290 Z M1260 310 L1348 310 L1350 438 L1263 436 Z M1366 311 L1456 312 L1458 438 L1370 438 Z"/>
-    <g clip-path="url(#panes-right)"><image class="window-fire" href="assets/Antique Brass Dragon Knocker at Night.png" width="1672" height="941" filter="url(#firelit-texture)" mask="url(#fire-right)"/></g>
+    <g clip-path="url(#panes-right)"><image class="window-fire" data-href="assets/web/cottage.jpg" width="1672" height="941" filter="url(#firelit-texture)" mask="url(#fire-right)"/></g>
   </g>
 </g>
 </svg>
@@ -53,15 +53,15 @@
 <div class="workshop-layout" id="layout">
 <aside class="workshop-setting" aria-label="The Maker’s workshop">
 <div class="scene-frame"><div class="scene-stage" id="scene-stage">
-<div class="scene" id="scene"><img id="workshop-image" src="assets/final-room.png" alt="An unoccupied workshop with puzzle figures and maps on the table. A basset hound statue and dragon shield stand in the left doorway; the brass eye medallion hangs above a rune chart and maze on the right." width="1660" height="948"><div class="doorway-glow" aria-hidden="true"></div><div class="floor-spill" aria-hidden="true"></div><div class="light-shaft" aria-hidden="true"></div><div class="air-haze" aria-hidden="true"><i></i><i></i><i></i></div><div id="dust" aria-hidden="true"></div><div class="scene-dimmer" aria-hidden="true"></div></div>
+<div class="scene" id="scene"><img id="workshop-image" data-src="assets/web/workshop.jpg" alt="An unoccupied workshop with puzzle figures and maps on the table. A basset hound statue and dragon shield stand in the left doorway; the brass eye medallion hangs above a rune chart and maze on the right." width="1660" height="948"><div class="doorway-glow" aria-hidden="true"></div><div class="floor-spill" aria-hidden="true"></div><div class="light-shaft" aria-hidden="true"></div><div class="air-haze" aria-hidden="true"><i></i><i></i><i></i></div><div id="dust" aria-hidden="true"></div><div class="scene-dimmer" aria-hidden="true"></div></div>
 <div class="scene scene-workbench" id="workbench-scene" hidden>
-  <img id="workbench-image" src="assets/workbench.png" alt="Lantern-lit workbench with a wooden gear mechanism, tools, an ornate box and a framed portrait." width="1672" height="941">
+  <img id="workbench-image" data-src="assets/web/workbench.jpg" alt="Lantern-lit workbench with a wooden gear mechanism, tools, an ornate box and a framed portrait." width="1672" height="941">
   <div class="lantern-glow" aria-hidden="true"></div>
   <div class="light-shaft" aria-hidden="true"></div>
   <div class="scene-dust" aria-hidden="true"></div>
 </div>
 <div class="scene scene-workbench scene-writing" id="writing-scene" hidden>
-  <img src="assets/poem.png" alt="An unfinished parchment beside a lantern, quill and ink bottle, with a blurred portrait behind the desk." width="1672" height="941">
+  <img data-src="assets/web/writing-desk.jpg" alt="An unfinished parchment beside a lantern, quill and ink bottle, with a blurred portrait behind the desk." width="1672" height="941">
   <div class="lantern-glow" aria-hidden="true"></div>
   <div class="scene-dust" aria-hidden="true"></div>
 </div>
@@ -100,4 +100,4 @@
     <div class="dialog-actions"><button type="submit">Submit</button><button id="cancel-line" type="button">Cancel</button></div>
   </form>
 </dialog>
-<script type="module" src="app.js?v=three-knocks-1"></script></body></html>
+<script type="module" src="app.js?v=entrance-first-1"></script></body></html>

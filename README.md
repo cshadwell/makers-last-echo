@@ -31,3 +31,13 @@ Player-completion notifications and the entrance connection from Dragon Dungeon 
 ## Verification limits
 
 Automated tests cover playback sequencing, retry handling, saved state, answer validation, piano sample mapping and mixing, atmosphere calculations, and prologue handoff. Physical phone audio, interruption behavior, and subjective musical matching should also be tested on the intended devices.
+
+## Entrance-first loading
+
+The supplied originals remain in `assets/`. Runtime image derivatives live in `assets/web/`; `image-assets.js` maps the original assignments to these smaller files. `scripts/optimize-images.py` regenerates them using macOS `sips` without changing the originals. No build step is required to deploy the committed files.
+
+Arrival loads the cottage image first, activates its window lighting, decodes four 320-pixel knocker frames, then prepares the knock sound. Only then is the knocker enabled. The first workshop scene is prepared next. Later scenes and challenge images/audio load during narration; piano samples are deferred until the challenge is entered and download with two concurrent requests.
+
+After knocking, the cottage fades to black. The first workshop is decoded before it is revealed; narration and the ten-second Skip Prologue window begin after that reveal. There is no loading message or skip control on the cottage. Actual failures expose a retry control.
+
+A no-cache local test with a shared 4 Mbps limit completed the cottage image transfer in approximately 1.4 seconds and the entry assets in 2.3 seconds. These are controlled test observations, not a guarantee for every network or device. Test real mobile Safari and the final Dungeon portal separately.
