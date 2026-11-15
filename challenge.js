@@ -41,7 +41,7 @@ export class StanzaPlayer extends NarratedPrologue {
 }
 
 export class FinalChallenge {
-  constructor({audio, settings, storage}) {
+  constructor({audio, settings, storage, onSolved = () => {}}) {
     this.settings = settings;
     this.storage = storage;
     try {
@@ -182,12 +182,13 @@ export class FinalChallenge {
     document.getElementById('cancel-line').onclick = () => document.getElementById('line-dialog').close();
     document.getElementById('line-form').onsubmit = event => {
       event.preventDefault();
-      if (!this.listened || this.sequential) return;
+      if (!this.listened || this.sequential || this.ending) return;
       const value = document.getElementById('missing-line').value;
       if (!validFinalLine(value)) {
         document.getElementById('line-feedback').textContent = 'Not quite. Listen again.';
         return;
       }
+      this.ending = true;
       this.piano.stop();
       this.solved = true;
       this.player.stop();
@@ -195,6 +196,7 @@ export class FinalChallenge {
       this.save();
       this.render();
       document.getElementById('line-dialog').close();
+      onSolved();
     };
     window.addEventListener('pagehide', () => this.piano.stop());
     this.render();
@@ -250,7 +252,7 @@ export class FinalChallenge {
   }
 
   render() {
-    const enabled = !!this.listened && !this.sequential;
+    const enabled = !this.ending && !!this.listened && !this.sequential;
     document.getElementById('puzzle').classList.toggle('initial-listening', this.sequential || !this.listened);
     document.getElementById('stanza-readalong').hidden = !this.sequential && !!this.listened;
     this.piano?.setEnabled(enabled && this.entered);
