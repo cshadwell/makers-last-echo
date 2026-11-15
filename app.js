@@ -1,12 +1,11 @@
-import {CottageAtmosphere} from './cottage.js?v=knocker-frames-1';
-import {WorkshopAtmosphere} from './atmosphere.js?v=knocker-frames-1';
+import {KnockEntry} from './knock-entry.js';
+import {CottageAtmosphere} from './cottage.js?v=three-knocks-1';
+import {WorkshopAtmosphere} from './atmosphere.js?v=three-knocks-1';
 import {NarratedPrologue} from './prologue.js';
-import {config} from './config.js?v=knocker-frames-1';
+import {config} from './config.js?v=three-knocks-1';
 import {readProgress} from './logic.js';
-import {FinalChallenge} from './challenge.js?v=knocker-frames-1';
+import {FinalChallenge} from './challenge.js?v=three-knocks-1';
 const $=id=>document.getElementById(id);
-let knockStarted = 0;
-let knockTransition;
 const cottage = new CottageAtmosphere($('cottage-entry'));
 cottage.start();
 function leaveCottage() {
@@ -57,6 +56,7 @@ function resetPrologue() {
 let skipTimer;
 let skipWindowStarted = false;
 function openPuzzle({skipListening = false} = {}) {
+  knock.stop();
   leaveCottage();
   clearTimeout(skipTimer);
   $('skip-prologue').hidden = true;
@@ -152,9 +152,7 @@ const prologue = new NarratedPrologue({
     void stage.offsetWidth;
   },
   onPlaying() {
-    const delay = motionPreference.matches ? 0 : Math.max(0, 1000 - (performance.now() - knockStarted));
-    clearTimeout(knockTransition);
-    knockTransition = setTimeout(leaveCottage, delay);
+    leaveCottage();
     document.body.classList.remove('opening-black');
     if (!skipWindowStarted) {
       skipWindowStarted = true;
@@ -165,7 +163,6 @@ const prologue = new NarratedPrologue({
   onRetry(show) {
     $('prologue-recovery').hidden = !show;
     if (show) {
-      clearTimeout(knockTransition);
       $('knocker-entry').disabled = false;
       $('retry-prologue').textContent = 'Retry narration';
       $('retry-prologue').focus({preventScroll: true});
@@ -175,8 +172,11 @@ const prologue = new NarratedPrologue({
     if (puzzleOpen) return;
     $('skip-prologue').hidden = false;
     if (ready) {
-      $('knocker-entry').disabled = false;
-      $('prologue-recovery').hidden = true;
+      knock.prepare().then(() => {
+        if (puzzleOpen) return;
+        $('knocker-entry').disabled = false;
+        $('prologue-recovery').hidden = true;
+      }).catch(showKnockError);
     }
     else {
       $('prologue-recovery').hidden = false;
@@ -184,6 +184,33 @@ const prologue = new NarratedPrologue({
     }
   },
 });
+
+let knockFailed = false;
+function showKnockError() {
+  knockFailed = true;
+  $('knocker-entry').disabled = false;
+  $('prologue-recovery').hidden = false;
+  $('retry-prologue').textContent = 'Retry knocking';
+}
+const knock = new KnockEntry({
+  audio: $('prologue-audio'), frames: document.querySelectorAll('.knocker-frame'),
+  reducedMotion: motionPreference,
+  onComplete: () => { knockFailed = false; playEntry(); },
+  onError: showKnockError,
+});
+function startKnocking() {
+  if (knock.active) return;
+  $('knocker-entry').disabled = true;
+  $('prologue-recovery').hidden = true;
+  if (!knock.url) {
+    // A retry that needs another download must preserve the explicit audio gesture.
+    knock.prepare().then(() => { $('knocker-entry').disabled = false; }).catch(showKnockError);
+    return;
+  }
+  prologue.stop();
+  knockFailed = false;
+  knock.play();
+}
 
 function startIntroduction() {
   if (prologue.urls) prologue.start();
@@ -203,16 +230,8 @@ function playEntry() {
   else if (prologue.phase === 'retry') prologue.retry();
   else prologue.start();
 }
-$('retry-prologue').onclick = playEntry;
-$('knocker-entry').onclick = () => {
-  if ($('knocker-entry').disabled) return;
-  $('knocker-entry').disabled = true;
-  knockStarted = performance.now();
-  $('cottage-entry').classList.remove('is-knocking');
-  void $('cottage-entry').offsetWidth;
-  $('cottage-entry').classList.add('is-knocking');
-  playEntry();
-};
+$('retry-prologue').onclick = () => knockFailed ? startKnocking() : playEntry();
+$('knocker-entry').onclick = startKnocking;
 $('skip-prologue').onclick = () => openPuzzle({skipListening: true});
 preparePrologue();
 
@@ -225,6 +244,7 @@ function save() {
   try { storage.setItem(config.storageKey, JSON.stringify(state)); } catch {}
 }
 window.addEventListener('pagehide', () => {
+  knock.stop();
   if (prologue.phase === 'playing' && !prologue.audio.ended) prologue.fail();
   else if (challenge.player.phase === 'playing' && !challenge.player.audio.ended) challenge.player.fail();
 });

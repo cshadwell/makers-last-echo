@@ -517,16 +517,3 @@ body.cottage-entry .prologue-recovery button { background: #1b130cd9; box-shadow
 }
 .knocker-frame { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; }
 .knocker-frame-1 { opacity: 1; }
-.is-knocking .knocker-frame-2 { animation: knock-frame-2 1s linear both; }
-.is-knocking .knocker-frame-3 { animation: knock-frame-3 1s linear both; }
-.is-knocking .knocker-frame-4 { animation: knock-frame-4 1s linear both; }
-@keyframes knock-frame-2 {
-  0%, 8% { opacity: 0; } 17%, 72% { opacity: 1; } 83%, 100% { opacity: 0; }
-}
-@keyframes knock-frame-3 {
-  0%, 23% { opacity: 0; } 33%, 62% { opacity: 1; } 73%, 100% { opacity: 0; }
-}
-@keyframes knock-frame-4 {
-  0%, 39% { opacity: 0; } 49%, 54% { opacity: 1; } 65%, 100% { opacity: 0; }
-}
-@media(prefers-reduced-motion:reduce) { .is-knocking .knocker-frame { animation: none; } }
