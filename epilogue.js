@@ -1,5 +1,8 @@
 import {NarratedPrologue} from './prologue.js?v=epilogue-1';
 
+// Last audible decay measured at 11.34s; retain 1.5s of breathing room. Original MP3 stays unchanged.
+export const FIRST_EPILOGUE_END = 12.84;
+
 // Reuse narration's actual-ended progression and same-clip interruption recovery.
 export class Epilogue {
   constructor({audio, root, curtain, fade, onBlack = () => {}}) {
@@ -19,6 +22,12 @@ export class Epilogue {
         else {this.image.hidden=true;root.querySelector('.the-end').hidden=false;this.player.stop();}
         void curtain.offsetWidth;curtain.classList.remove('is-black');await fade(curtain,2100);
       },
+    });
+    audio.addEventListener('timeupdate',()=>{
+      if(this.player.phase==='playing' && this.player.index===0 && audio.currentTime>=FIRST_EPILOGUE_END){
+        this.player.advance();
+        audio.pause();
+      }
     });
     this.retry.onclick=async()=>{
       this.recovery.hidden=true;

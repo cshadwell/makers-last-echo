@@ -542,3 +542,6 @@ body.studio-reveal::after { transition-duration: 1s; }
 #line-dialog.is-completed{position:fixed;inset:0;margin:auto;z-index:850;box-shadow:0 0 0 100vmax #000;max-height:calc(100dvh - 24px)}
 #line-dialog.is-completed .dialog-actions,#line-dialog.is-completed #line-feedback,#line-dialog.is-completed #line-label{display:none}
 #line-dialog.is-completed input{outline:none;cursor:default}
+
+#line-dialog .parchment-entry input,#line-dialog .parchment-entry input:focus,#line-dialog .parchment-entry input:focus-visible{border:0;outline:none;box-shadow:none;background:transparent;caret-color:#29180e}
+#line-dialog.is-completed .parchment-entry input{caret-color:transparent}

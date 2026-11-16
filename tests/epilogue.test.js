@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {Epilogue} from '../epilogue.js';
+import {Epilogue,FIRST_EPILOGUE_END} from '../epilogue.js';
 class Media extends EventTarget{
  paused=true;ended=false;currentTime=0;plays=[];
  play(){this.paused=false;this.ended=false;this.plays.push(this.src);this.dispatchEvent(new Event('playing'));return Promise.resolve();}
@@ -19,7 +19,9 @@ test('epilogue waits for both genuine endings, fades between clips, ignores dupl
  ending.start();ending.start();await Promise.resolve();await Promise.resolve();assert.deepEqual(audio.plays,['one']);
  audio.currentTime=4;audio.pause();audio.dispatchEvent(new Event('pause'));assert.equal(recovery.hidden,false);
  retry.onclick();assert.equal(audio.currentTime,4);assert.equal(ending.player.index,0);
- audio.ended=true;audio.dispatchEvent(new Event('ended'));audio.dispatchEvent(new Event('ended'));
+ audio.currentTime=FIRST_EPILOGUE_END-.1;audio.dispatchEvent(new Event('timeupdate'));assert.equal(ending.player.index,0);assert.equal(fades,0);
+ audio.currentTime=FIRST_EPILOGUE_END;audio.dispatchEvent(new Event('timeupdate'));audio.dispatchEvent(new Event('timeupdate'));
+ assert.equal(audio.paused,true);
  await new Promise(r=>setTimeout(r,10));assert.equal(image.hidden,false);assert.equal(end.hidden,true);assert.equal(fades,2);assert.equal(blackCalls,1);assert.equal(audio.plays.at(-1),'two');
  audio.ended=true;audio.dispatchEvent(new Event('ended'));await new Promise(r=>setTimeout(r,10));
  assert.equal(image.hidden,true);assert.equal(end.hidden,false);assert.equal(fades,4);assert.equal(ending.player.phase,'idle');

@@ -197,10 +197,12 @@ export class FinalChallenge {
       this.render();
       const note = document.getElementById('line-dialog');
       document.getElementById('missing-line').readOnly = true;
+      document.getElementById('missing-line').blur();
       note.classList.add('is-completed');
       // Keep the completed note visible, outside the modal top layer so the cinematic curtain covers it.
       note.close();
       note.show();
+      document.getElementById('missing-line').blur();
       onSolved();
     };
     window.addEventListener('pagehide', () => this.piano.stop());
