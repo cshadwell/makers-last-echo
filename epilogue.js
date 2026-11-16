@@ -2,7 +2,7 @@ import {NarratedPrologue} from './prologue.js?v=epilogue-1';
 
 // Reuse narration's actual-ended progression and same-clip interruption recovery.
 export class Epilogue {
-  constructor({audio, root, curtain, fade}) {
+  constructor({audio, root, curtain, fade, onBlack = () => {}}) {
     this.root=root;this.curtain=curtain;this.fade=fade;this.started=false;
     this.image=root.querySelector('img');
     this.retry=root.querySelector('button');
@@ -13,6 +13,7 @@ export class Epilogue {
       onRetry:show=>{this.recovery.hidden=!show;},
       onAdvance:async next=>{
         curtain.classList.add('is-black');await fade(curtain,2100);
+        onBlack();
         root.classList.add('has-backdrop');
         if(next===1){this.image.hidden=false;}
         else {this.image.hidden=true;root.querySelector('.the-end').hidden=false;this.player.stop();}

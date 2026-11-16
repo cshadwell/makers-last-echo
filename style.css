@@ -538,3 +538,7 @@ body.studio-reveal::after { transition-duration: 1s; }
 #epilogue .the-end{margin:0;color:#fff;font:clamp(64px,12vw,150px)/1.2 'FauxAntique',cursive;text-align:center}
 .epilogue-recovery{position:absolute;bottom:7%;text-align:center;background:#18140f;padding:12px 24px;border:1px solid #9b8660}
 .epilogue-playing{overflow:hidden}
+
+#line-dialog.is-completed{position:fixed;inset:0;margin:auto;z-index:850;box-shadow:0 0 0 100vmax #000;max-height:calc(100dvh - 24px)}
+#line-dialog.is-completed .dialog-actions,#line-dialog.is-completed #line-feedback,#line-dialog.is-completed #line-label{display:none}
+#line-dialog.is-completed input{outline:none;cursor:default}

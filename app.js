@@ -1,11 +1,11 @@
-import {KnockEntry} from './knock-entry.js?v=epilogue-1';
-import {CottageAtmosphere} from './cottage.js?v=epilogue-1';
-import {WorkshopAtmosphere} from './atmosphere.js?v=epilogue-1';
-import {NarratedPrologue} from './prologue.js?v=epilogue-1';
-import {config} from './config.js?v=epilogue-1';
+import {KnockEntry} from './knock-entry.js?v=completed-note-2';
+import {CottageAtmosphere} from './cottage.js?v=completed-note-2';
+import {WorkshopAtmosphere} from './atmosphere.js?v=completed-note-2';
+import {NarratedPrologue} from './prologue.js?v=completed-note-2';
+import {config} from './config.js?v=completed-note-2';
 import {readProgress} from './logic.js';
-import {FinalChallenge} from './challenge.js?v=epilogue-1';
-import {Epilogue} from './epilogue.js?v=epilogue-1';
+import {FinalChallenge} from './challenge.js?v=completed-note-2';
+import {Epilogue} from './epilogue.js?v=completed-note-2';
 import {loadEntrance, loadImage} from './loading.js';
 const $ = id => document.getElementById(id);
 let storage; try { storage = window.localStorage; } catch {}
@@ -67,7 +67,7 @@ async function ensureChallenge() {
   if (challengeTask) return challengeTask;
   challengeTask = (async () => {
     if (!challenge) {
-      epilogue = new Epilogue({audio, root:$('epilogue'), curtain:$('handoff-curtain'), fade:waitForFade});
+      epilogue = new Epilogue({audio, root:$('epilogue'), curtain:$('handoff-curtain'), fade:waitForFade, onBlack:()=>$('line-dialog').close()});
       challenge = new FinalChallenge({audio, settings: config.challenge, storage, onSolved:()=>epilogue.start()});
       epilogue.prepare();
     }
