@@ -44,10 +44,10 @@ export class FinalChallenge {
   constructor({audio, settings, storage, onSolved = () => {}}) {
     this.settings = settings;
     this.storage = storage;
+    this.solved = false; // Completion is per visit; returning players can solve and replay the ending.
     try {
       const saved = JSON.parse(storage?.getItem(settings.storageKey));
-      this.solved = saved?.solved === true;
-      this.listened = saved?.listened === true || this.solved;
+      this.listened = saved?.listened === true || saved?.solved === true;
     } catch {}
     this.panels = [];
     this.buttons = [];
@@ -262,14 +262,14 @@ export class FinalChallenge {
     document.getElementById('stanza-readalong').hidden = !this.sequential && !!this.listened;
     this.piano?.setEnabled(enabled && this.entered);
     this.buttons.forEach(button => { button.disabled = !enabled || !this.ready; });
-    document.getElementById('complete-line').disabled = !enabled || this.solved;
+    document.getElementById('complete-line').disabled = !enabled;
     document.getElementById('final-victory').hidden = !this.solved || this.sequential;
     this.reveal(this.player?.phase === 'playing' ? this.player.index : null);
   }
 
   save() {
     try {
-      this.storage.setItem(this.settings.storageKey, JSON.stringify({listened: !!this.listened, solved: !!this.solved}));
+      this.storage.setItem(this.settings.storageKey, JSON.stringify({listened: !!this.listened}));
     } catch {
       const status = document.getElementById('save-status');
       status.hidden = false;

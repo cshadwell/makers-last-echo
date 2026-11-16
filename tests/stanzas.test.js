@@ -138,3 +138,12 @@ test('explicit prologue skip unlocks replay and piano without starting the initi
   challenge.enter({skipListening:true});
   assert.equal(starts,0);
 });
+
+test('saved listening progress never persists a completion lock', async()=>{
+ const {FinalChallenge}=await import('../challenge.js');
+ let saved;
+ const challenge=Object.create(FinalChallenge.prototype);
+ Object.assign(challenge,{listened:true,solved:true,settings:{storageKey:'test.makers'},storage:{setItem(key,value){assert.equal(key,'test.makers');saved=JSON.parse(value);}}});
+ challenge.save();
+ assert.deepEqual(saved,{listened:true});
+});

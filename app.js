@@ -1,11 +1,11 @@
-import {KnockEntry} from './knock-entry.js?v=completed-note-2';
-import {CottageAtmosphere} from './cottage.js?v=completed-note-2';
-import {WorkshopAtmosphere} from './atmosphere.js?v=completed-note-2';
-import {NarratedPrologue} from './prologue.js?v=completed-note-2';
-import {config} from './config.js?v=completed-note-2';
+import {KnockEntry} from './knock-entry.js?v=repeat-ending-1';
+import {CottageAtmosphere} from './cottage.js?v=repeat-ending-1';
+import {WorkshopAtmosphere} from './atmosphere.js?v=repeat-ending-1';
+import {NarratedPrologue} from './prologue.js?v=repeat-ending-1';
+import {config} from './config.js?v=repeat-ending-1';
 import {readProgress} from './logic.js';
-import {FinalChallenge} from './challenge.js?v=completed-note-2';
-import {Epilogue} from './epilogue.js?v=completed-note-2';
+import {FinalChallenge} from './challenge.js?v=repeat-ending-1';
+import {Epilogue} from './epilogue.js?v=repeat-ending-1';
 import {loadEntrance, loadImage} from './loading.js';
 const $ = id => document.getElementById(id);
 let storage; try { storage = window.localStorage; } catch {}
